@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Cadastro de Atendidos</h2>
+
+<input id="nome" placeholder="Nome"><br>
+<input id="sobrenome" placeholder="Sobrenome"><br>
+<input id="telefone" placeholder="Telefone"><br>
+<input id="cep" placeholder="CEP"><br>
+<input id="rua" placeholder="Rua"><br>
+<input id="bairro" placeholder="Bairro"><br>
+<input id="cidade" placeholder="Cidade"><br>
+<input id="estado" placeholder="Estado"><br><br>
+
+<button onclick="cadastrar()">Cadastrar</button>
+
+<script>
+async function cadastrar(){
+  const res = await fetch("/atendidos", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      nome:nome.value,
+      sobrenome:sobrenome.value,
+      telefone:telefone.value,
+      cep:cep.value,
+      rua:rua.value,
+      bairro:bairro.value,
+      cidade:cidade.value,
+      estado:estado.value
+    })
+  });
+
+  alert(await res.text());
+}
+</script>
+
+</body>
+</html>

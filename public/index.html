@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Sistema ONG</title>
-</head>
 <body>
 
-<h1>Cadastro de Voluntários</h1>
+<h2>Login</h2>
 
-<form id="form">
-  <input type="text" id="nome" placeholder="Nome" required>
-  <button type="submit">Cadastrar</button>
-</form>
+<input id="email" placeholder="Email"><br><br>
+<input id="senha" type="password" placeholder="Senha"><br><br>
+
+<button onclick="login()">Entrar</button>
 
 <script>
-document.getElementById("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const nome = document.getElementById("nome").value;
-
-  const res = await fetch("/voluntarios", {
+async function login() {
+  const res = await fetch("/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
-      nome: nome,
-      cpf: "123456",
-      email: "teste@email.com"
+      email: email.value,
+      senha: senha.value
     })
   });
 
-  const msg = await res.text();
-  alert(msg);
-});
+  const data = await res.json();
+
+  if(data.token){
+    localStorage.setItem("token", data.token);
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Erro no login");
+  }
+}
 </script>
 
 </body>

@@ -1,13 +1,13 @@
 const express = require("express");
 const mysql = require("mysql2");
 const path = require("path");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const app = express();
-
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// CONEXÃO MYSQL (RAILWAY)
 const db = mysql.createConnection({
   host: "roundhouse.proxy.rlwy.net",
   user: "root",
@@ -16,42 +16,59 @@ const db = mysql.createConnection({
   port: 20614
 });
 
-// NÃO DEIXA O SERVIDOR QUEBRAR
-db.connect((err) => {
-  if (err) {
-    console.error("Erro ao conectar no MySQL:", err);
-  } else {
-    console.log("Conectado ao MySQL!");
-  }
+db.connect(err => {
+  if (err) console.error(err);
+  else console.log("MySQL conectado!");
 });
 
-db.on("error", (err) => {
-  console.error("Erro no MySQL:", err);
+// REGISTRO
+app.post("/register", async (req, res) => {
+  const { email, senha } = req.body;
+
+  const hash = await bcrypt.hash(senha, 10);
+
+  db.query("INSERT INTO usuarios (email, senha) VALUES (?, ?)",
+    [email, hash],
+    (err) => {
+      if (err) return res.status(500).send("Erro");
+      res.send("Usuário criado");
+    });
 });
 
-// ROTA DE TESTE
-app.get("/teste", (req, res) => {
-  res.send("API funcionando!");
-});
+// LOGIN
+app.post("/login", (req, res) => {
+  const { email, senha } = req.body;
 
-// CADASTRO
-app.post("/voluntarios", (req, res) => {
-  const { nome, cpf, email } = req.body;
+  db.query("SELECT * FROM usuarios WHERE email = ?", [email], async (err, result) => {
+    if (result.length === 0) return res.send("Usuário não encontrado");
 
-  const sql = "INSERT INTO voluntarios (nome, cpf, email) VALUES (?, ?, ?)";
+    const user = result[0];
+    const valid = await bcrypt.compare(senha, user.senha);
 
-  db.query(sql, [nome, cpf, email], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Erro ao cadastrar");
-    }
+    if (!valid) return res.send("Senha inválida");
 
-    res.send("Voluntário cadastrado com sucesso!");
+    const token = jwt.sign({ id: user.id }, "segredo");
+
+    res.json({ token });
   });
 });
 
-const PORT = process.env.PORT || 3000;
+// CADASTRO ATENDIDO
+app.post("/atendidos", (req, res) => {
+  const {
+    nome, sobrenome, telefone, cep, rua,
+    bairro, cidade, estado
+  } = req.body;
 
-app.listen(PORT, () => {
-  console.log("Servidor rodando na porta " + PORT);
+  db.query(
+    "INSERT INTO atendidos (nome, sobrenome, telefone, cep, rua, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    [nome, sobrenome, telefone, cep, rua, bairro, cidade, estado],
+    (err) => {
+      if (err) return res.status(500).send("Erro");
+
+      res.send("Atendido cadastrado com sucesso!");
+    }
+  );
 });
+
+app.listen(process.env.PORT || 3000);
