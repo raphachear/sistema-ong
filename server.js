@@ -7,12 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-const db = mysql.createConnection({
-  host: "mysql.railway.internal",
-  user: "root",
-  password: "FaJhwkZcSpsIDBZIhKjJIvbrFvaZngmZ",
-  database: "railway"
-});
+const db = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
 
 db.connect(err => {
   if (err) {
