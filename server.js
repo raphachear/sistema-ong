@@ -7,8 +7,13 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-const db = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
-
+const db = mysql.createConnection({
+  host: "roundhouse.proxy.rlwy.net",
+  user: "root",
+  password: "FaJhwkZcSpsIDBZIhKjJIvbrFvaZngmZ",
+  database: "railway",
+  port: 20614
+});
 db.connect(err => {
   if (err) {
     console.error("Erro ao conectar:", err);
