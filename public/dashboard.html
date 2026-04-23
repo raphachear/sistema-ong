@@ -21,14 +21,14 @@ async function cadastrar(){
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify({
-      nome:nome.value,
-      sobrenome:sobrenome.value,
-      telefone:telefone.value,
-      cep:cep.value,
-      rua:rua.value,
-      bairro:bairro.value,
-      cidade:cidade.value,
-      estado:estado.value
+      nome:document.getElementById("nome").value,
+      sobrenome:document.getElementById("sobrenome").value,
+      telefone:document.getElementById("telefone").value,
+      cep:document.getElementById("cep").value,
+      rua:document.getElementById("rua").value,
+      bairro:document.getElementById("bairro").value,
+      cidade:document.getElementById("cidade").value,
+      estado:document.getElementById("estado").value
     })
   });
 

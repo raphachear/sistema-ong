@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Login</title>
+</head>
 <body>
 
 <h2>Login</h2>
@@ -15,18 +18,23 @@ async function login() {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
-      email: email.value,
-      senha: senha.value
+      email: document.getElementById("email").value,
+      senha: document.getElementById("senha").value
     })
   });
 
-  const data = await res.json();
+  const text = await res.text();
 
-  if(data.token){
-    localStorage.setItem("token", data.token);
-    window.location.href = "dashboard.html";
-  } else {
-    alert("Erro no login");
+  try {
+    const data = JSON.parse(text);
+    if(data.token){
+      localStorage.setItem("token", data.token);
+      window.location.href = "dashboard.html";
+    } else {
+      alert(text);
+    }
+  } catch {
+    alert(text);
   }
 }
 </script>
