@@ -18,10 +18,20 @@ document.getElementById("form").addEventListener("submit", async (e) => {
 
   const nome = document.getElementById("nome").value;
 
-  const res = await fetch("/api/teste");
-  const data = await res.text();
+  const res = await fetch("/voluntarios", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nome: nome,
+      cpf: "123456",
+      email: "teste@email.com"
+    })
+  });
 
-  alert(data);
+  const msg = await res.text();
+  alert(msg);
 });
 </script>
 
