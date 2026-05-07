@@ -1,49 +1,73 @@
-<script>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-async function login() {
+<head>
+  <meta charset="UTF-8">
+  <title>Login ONG</title>
+</head>
 
-  try {
+<body>
 
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
+  <h1>Login</h1>
 
-    const resposta = await fetch("/login", {
+  <input type="email" id="email" placeholder="Email">
+  <br><br>
 
-      method: "POST",
+  <input type="password" id="senha" placeholder="Senha">
+  <br><br>
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+  <button onclick="login()">Entrar</button>
 
-      body: JSON.stringify({
-        email: email,
-        senha: senha
-      })
+  <script>
 
-    });
+    async function login() {
 
-    const texto = await resposta.text();
+      try {
 
-    console.log(texto);
+        const email = document.getElementById("email").value;
+        const senha = document.getElementById("senha").value;
 
-    if(texto.includes("token")){
+        const resposta = await fetch("/login", {
 
-      window.location.href = "/dashboard.html";
+          method: "POST",
 
-    } else {
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-      alert(texto);
+          body: JSON.stringify({
+            email: email,
+            senha: senha
+          })
+
+        });
+
+        const texto = await resposta.text();
+
+        console.log(texto);
+
+        if (texto.includes("token")) {
+
+          window.location.href = "/dashboard.html";
+
+        } else {
+
+          alert(texto);
+
+        }
+
+      } catch (err) {
+
+        console.log(err);
+
+        alert("Erro no login");
+
+      }
 
     }
 
-  } catch(err){
+  </script>
 
-    console.log(err);
+</body>
 
-    alert("Erro no login");
-
-  }
-
-}
-
-</script>
+</html>
