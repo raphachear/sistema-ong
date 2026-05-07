@@ -104,7 +104,7 @@ app.post("/login", (req, res) => {
         "segredo"
       );
 
-      res.json({ token });
+      res.send("token");
 
     }
   );
