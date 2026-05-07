@@ -2,13 +2,13 @@ const express = require("express");
 const mysql = require("mysql2");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const app = express();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+// CONEXÃO MYSQL RAILWAY
 const db = mysql.createConnection({
   host: "roundhouse.proxy.rlwy.net",
   user: "root",
@@ -17,15 +17,18 @@ const db = mysql.createConnection({
   port: 20614
 });
 
+// CONECTAR MYSQL
 db.connect((err) => {
+
   if (err) {
-    console.log(err);
+    console.log("Erro ao conectar:", err);
   } else {
     console.log("MySQL conectado!");
   }
+
 });
 
-// CRIA TABELA USUARIOS
+// CRIAR TABELA USUARIOS
 db.query(`
 CREATE TABLE IF NOT EXISTS usuarios (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,29 +37,34 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 `);
 
-// CRIA TABELA ATENDIDOS
+// CRIAR TABELA ATENDIDOS
 db.query(`
 CREATE TABLE IF NOT EXISTS atendidos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100),
   sobrenome VARCHAR(100),
-  telefone VARCHAR(20),
+  telefone VARCHAR(30),
   cep VARCHAR(20),
   rua VARCHAR(100),
   bairro VARCHAR(100),
   cidade VARCHAR(100),
-  estado VARCHAR(50)
+  estado VARCHAR(100)
 )
 `);
+
+// ROTA TESTE
+app.get("/teste", (req, res) => {
+  res.send("API funcionando!");
+});
 
 // CRIAR ADMIN
 app.get("/criar-admin", async (req, res) => {
 
-  const senha = await bcrypt.hash("123456", 10);
+  const senhaHash = await bcrypt.hash("123456", 10);
 
   db.query(
     "INSERT INTO usuarios (email, senha) VALUES (?, ?)",
-    ["admin@ong.com", senha],
+    ["admin@ong.com", senhaHash],
     (err) => {
 
       if (err) {
@@ -65,6 +73,7 @@ app.get("/criar-admin", async (req, res) => {
       }
 
       res.send("Admin criado!");
+
     }
   );
 
@@ -81,7 +90,8 @@ app.post("/login", (req, res) => {
     async (err, result) => {
 
       if (err) {
-        return res.send("Erro");
+        console.log(err);
+        return res.send("Erro no servidor");
       }
 
       if (result.length === 0) {
@@ -99,11 +109,6 @@ app.post("/login", (req, res) => {
         return res.send("Senha inválida");
       }
 
-      const token = jwt.sign(
-        { id: usuario.id },
-        "segredo"
-      );
-
       res.send("token");
 
     }
@@ -111,7 +116,7 @@ app.post("/login", (req, res) => {
 
 });
 
-// CADASTRO DE ATENDIDOS
+// CADASTRAR ATENDIDO
 app.post("/atendidos", (req, res) => {
 
   const {
@@ -155,6 +160,9 @@ app.post("/atendidos", (req, res) => {
 
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Servidor rodando");
+// INICIAR SERVIDOR
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Servidor rodando na porta " + PORT);
 });
