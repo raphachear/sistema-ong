@@ -32,32 +32,42 @@
 
     async function cadastrar() {
 
-      const resposta = await fetch("/atendidos", {
+      try {
 
-        method: "POST",
+        const resposta = await fetch("/atendidos", {
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+          method: "POST",
 
-        body: JSON.stringify({
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-          nome: document.getElementById("nome").value,
-          sobrenome: document.getElementById("sobrenome").value,
-          telefone: document.getElementById("telefone").value,
-          cep: document.getElementById("cep").value,
-          rua: document.getElementById("rua").value,
-          bairro: document.getElementById("bairro").value,
-          cidade: document.getElementById("cidade").value,
-          estado: document.getElementById("estado").value
+          body: JSON.stringify({
 
-        })
+            nome: document.getElementById("nome").value,
+            sobrenome: document.getElementById("sobrenome").value,
+            telefone: document.getElementById("telefone").value,
+            cep: document.getElementById("cep").value,
+            rua: document.getElementById("rua").value,
+            bairro: document.getElementById("bairro").value,
+            cidade: document.getElementById("cidade").value,
+            estado: document.getElementById("estado").value
 
-      });
+          })
 
-      const texto = await resposta.text();
+        });
 
-      alert(texto);
+        const texto = await resposta.text();
+
+        alert(texto);
+
+      } catch (erro) {
+
+        console.log(erro);
+
+        alert("Erro ao conectar com servidor");
+
+      }
 
     }
 
