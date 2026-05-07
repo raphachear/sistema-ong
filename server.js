@@ -37,9 +37,13 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 `);
 
-// CRIAR TABELA ATENDIDOS
+// APAGAR E CRIAR TABELA ATENDIDOS
 db.query(`
-CREATE TABLE IF NOT EXISTS atendidos (
+DROP TABLE IF EXISTS atendidos
+`);
+
+db.query(`
+CREATE TABLE atendidos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100),
   sobrenome VARCHAR(100),
@@ -52,7 +56,7 @@ CREATE TABLE IF NOT EXISTS atendidos (
 )
 `);
 
-// ROTA TESTE
+// TESTE API
 app.get("/teste", (req, res) => {
   res.send("API funcionando!");
 });
@@ -78,7 +82,6 @@ app.get("/criar-admin", async (req, res) => {
   );
 
 });
-
 
 // CADASTRAR ATENDIDO
 app.post("/atendidos", (req, res) => {
@@ -113,8 +116,11 @@ app.post("/atendidos", (req, res) => {
     (err) => {
 
       if (err) {
+
         console.log(err);
+
         return res.send("Erro ao cadastrar");
+
       }
 
       res.send("Atendido cadastrado com sucesso!");
