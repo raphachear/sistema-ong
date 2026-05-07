@@ -3,66 +3,61 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Login ONG</title>
+  <title>Sistema ONG</title>
 </head>
 
 <body>
 
-  <h1>Login</h1>
+  <h1>Cadastro ONG</h1>
 
-  <input type="email" id="email" placeholder="Email">
-  <br><br>
+  <input id="nome" placeholder="Nome"><br><br>
 
-  <input type="password" id="senha" placeholder="Senha">
-  <br><br>
+  <input id="sobrenome" placeholder="Sobrenome"><br><br>
 
-  <button onclick="login()">Entrar</button>
+  <input id="telefone" placeholder="Telefone"><br><br>
+
+  <input id="cep" placeholder="CEP"><br><br>
+
+  <input id="rua" placeholder="Rua"><br><br>
+
+  <input id="bairro" placeholder="Bairro"><br><br>
+
+  <input id="cidade" placeholder="Cidade"><br><br>
+
+  <input id="estado" placeholder="Estado"><br><br>
+
+  <button onclick="cadastrar()">Cadastrar</button>
 
   <script>
 
-    async function login() {
+    async function cadastrar() {
 
-      try {
+      const resposta = await fetch("/atendidos", {
 
-        const email = document.getElementById("email").value;
-        const senha = document.getElementById("senha").value;
+        method: "POST",
 
-        const resposta = await fetch("/login", {
+        headers: {
+          "Content-Type": "application/json"
+        },
 
-          method: "POST",
+        body: JSON.stringify({
 
-          headers: {
-            "Content-Type": "application/json"
-          },
+          nome: document.getElementById("nome").value,
+          sobrenome: document.getElementById("sobrenome").value,
+          telefone: document.getElementById("telefone").value,
+          cep: document.getElementById("cep").value,
+          rua: document.getElementById("rua").value,
+          bairro: document.getElementById("bairro").value,
+          cidade: document.getElementById("cidade").value,
+          estado: document.getElementById("estado").value
 
-          body: JSON.stringify({
-            email: email,
-            senha: senha
-          })
+        })
 
-        });
+      });
 
-        const texto = await resposta.text();
+      const texto = await resposta.text();
 
-        console.log(texto);
-
-        if (texto.includes("token")) {
-
-          window.location.href = "/dashboard.html";
-
-        } else {
-
-          alert(texto);
-
-        }
-
-      } catch (err) {
-
-        console.log(err);
-
-        alert("Erro no login");
-
-      }
+      alert(texto);
 
     }
 

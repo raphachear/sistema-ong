@@ -79,42 +79,6 @@ app.get("/criar-admin", async (req, res) => {
 
 });
 
-// LOGIN
-app.post("/login", (req, res) => {
-
-  const { email, senha } = req.body;
-
-  db.query(
-    "SELECT * FROM usuarios WHERE email = ?",
-    [email],
-    async (err, result) => {
-
-      if (err) {
-        console.log(err);
-        return res.send("Erro no servidor");
-      }
-
-      if (result.length === 0) {
-        return res.send("Usuário não encontrado");
-      }
-
-      const usuario = result[0];
-
-      const senhaCorreta = await bcrypt.compare(
-        senha,
-        usuario.senha
-      );
-
-      if (!senhaCorreta) {
-        return res.send("Senha inválida");
-      }
-
-      res.send("token");
-
-    }
-  );
-
-});
 
 // CADASTRAR ATENDIDO
 app.post("/atendidos", (req, res) => {
