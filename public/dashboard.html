@@ -2,33 +2,31 @@
 <html>
 <body>
 
-<h2>Cadastro de Atendidos</h2>
+<h1>Cadastro ONG</h1>
 
 <input id="nome" placeholder="Nome"><br>
 <input id="sobrenome" placeholder="Sobrenome"><br>
 <input id="telefone" placeholder="Telefone"><br>
-<input id="cep" placeholder="CEP"><br>
-<input id="rua" placeholder="Rua"><br>
-<input id="bairro" placeholder="Bairro"><br>
-<input id="cidade" placeholder="Cidade"><br>
-<input id="estado" placeholder="Estado"><br><br>
 
 <button onclick="cadastrar()">Cadastrar</button>
 
 <script>
-async function cadastrar(){
+async function cadastrar() {
+
   const res = await fetch("/atendidos", {
     method:"POST",
-    headers:{"Content-Type":"application/json"},
+    headers:{
+      "Content-Type":"application/json"
+    },
     body: JSON.stringify({
-      nome:document.getElementById("nome").value,
-      sobrenome:document.getElementById("sobrenome").value,
-      telefone:document.getElementById("telefone").value,
-      cep:document.getElementById("cep").value,
-      rua:document.getElementById("rua").value,
-      bairro:document.getElementById("bairro").value,
-      cidade:document.getElementById("cidade").value,
-      estado:document.getElementById("estado").value
+      nome: document.getElementById("nome").value,
+      sobrenome: document.getElementById("sobrenome").value,
+      telefone: document.getElementById("telefone").value,
+      cep:"",
+      rua:"",
+      bairro:"",
+      cidade:"",
+      estado:""
     })
   });
 

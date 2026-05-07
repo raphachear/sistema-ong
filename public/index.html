@@ -5,10 +5,10 @@
 </head>
 <body>
 
-<h2>Login</h2>
+<h1>LOGIN</h1>
 
-<input id="email" placeholder="Email"><br><br>
-<input id="senha" type="password" placeholder="Senha"><br><br>
+<input id="email" placeholder="Email">
+<input id="senha" type="password" placeholder="Senha">
 
 <button onclick="login()">Entrar</button>
 
@@ -16,25 +16,21 @@
 async function login() {
   const res = await fetch("/login", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: {
+      "Content-Type":"application/json"
+    },
     body: JSON.stringify({
       email: document.getElementById("email").value,
       senha: document.getElementById("senha").value
     })
   });
 
-  const text = await res.text();
+  const data = await res.json();
 
-  try {
-    const data = JSON.parse(text);
-    if(data.token){
-      localStorage.setItem("token", data.token);
-      window.location.href = "dashboard.html";
-    } else {
-      alert(text);
-    }
-  } catch {
-    alert(text);
+  if(data.token){
+    window.location.href = "/dashboard.html";
+  } else {
+    alert("Login inválido");
   }
 }
 </script>
