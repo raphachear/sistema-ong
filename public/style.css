@@ -1,0 +1,37 @@
+body{
+  font-family: Arial;
+  background: #f4f4f4;
+  padding: 30px;
+}
+
+.container{
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+
+input{
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button{
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #2d89ef;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover{
+  background: #1b5fad;
+}
+
+h1{
+  text-align: center;
+}

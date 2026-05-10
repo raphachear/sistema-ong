@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Cadastro de Atendidos</h1>
+
+    <input id="nome" placeholder="Nome">
+
+    <input id="sobrenome" placeholder="Sobrenome">
+
+    <input id="telefone" placeholder="Telefone">
+
+    <input id="cep" placeholder="CEP">
+
+    <input id="rua" placeholder="Rua">
+
+    <input id="bairro" placeholder="Bairro">
+
+    <input id="cidade" placeholder="Cidade">
+
+    <input id="estado" placeholder="Estado">
+
+    <button onclick="cadastrar()">
+      Cadastrar
+    </button>
+
+    <button onclick="window.location.href='dashboard.html'">
+      Voltar
+    </button>
+
+  </div>
+
+  <script>
+
+    async function cadastrar() {
+
+      const resposta = await fetch("https://sistema-ong.onrender.com/atendidos", {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+          nome: document.getElementById("nome").value,
+          sobrenome: document.getElementById("sobrenome").value,
+          telefone: document.getElementById("telefone").value,
+          cep: document.getElementById("cep").value,
+          rua: document.getElementById("rua").value,
+          bairro: document.getElementById("bairro").value,
+          cidade: document.getElementById("cidade").value,
+          estado: document.getElementById("estado").value
+
+        })
+
+      });
+
+      const texto = await resposta.text();
+
+      alert(texto);
+
+    }
+
+  </script>
+
+</body>
+
+</html>

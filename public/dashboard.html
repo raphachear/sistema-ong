@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard ONG</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
 
-<h1>Cadastro ONG</h1>
+  <div class="container">
 
-<input id="nome" placeholder="Nome"><br>
-<input id="sobrenome" placeholder="Sobrenome"><br>
-<input id="telefone" placeholder="Telefone"><br>
+    <h1>Dashboard</h1>
 
-<button onclick="cadastrar()">Cadastrar</button>
+    <p>
+      Bem-vinda ao sistema da ONG
+    </p>
 
-<script>
-async function cadastrar() {
+    <button onclick="window.location.href='cadastro.html'">
+      Cadastrar Atendido
+    </button>
 
-  const res = await fetch("/atendidos", {
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify({
-      nome: document.getElementById("nome").value,
-      sobrenome: document.getElementById("sobrenome").value,
-      telefone: document.getElementById("telefone").value,
-      cep:"",
-      rua:"",
-      bairro:"",
-      cidade:"",
-      estado:""
-    })
-  });
+    <button onclick="window.location.href='lista.html'">
+      Ver Lista
+    </button>
 
-  alert(await res.text());
-}
-</script>
+    <button onclick="window.location.href='index.html'">
+      Sair
+    </button>
+
+  </div>
 
 </body>
+
 </html>

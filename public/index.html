@@ -3,69 +3,49 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Sistema ONG</title>
+  <title>Login - Sistema ONG</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <h1>Cadastro ONG</h1>
+  <div class="container">
 
-  <input id="nome" placeholder="Nome"><br><br>
+    <h1>Sistema ONG</h1>
 
-  <input id="sobrenome" placeholder="Sobrenome"><br><br>
+    <input type="email" id="email" placeholder="Email">
 
-  <input id="telefone" placeholder="Telefone"><br><br>
+    <input type="password" id="senha" placeholder="Senha">
 
-  <input id="cep" placeholder="CEP"><br><br>
+    <button onclick="login()">
+      Entrar
+    </button>
 
-  <input id="rua" placeholder="Rua"><br><br>
+    <button onclick="window.location.href='cadastro.html'">
+      Cadastro de Atendidos
+    </button>
 
-  <input id="bairro" placeholder="Bairro"><br><br>
+    <button onclick="window.location.href='lista.html'">
+      Lista de Atendidos
+    </button>
 
-  <input id="cidade" placeholder="Cidade"><br><br>
-
-  <input id="estado" placeholder="Estado"><br><br>
-
-  <button onclick="cadastrar()">Cadastrar</button>
+  </div>
 
   <script>
 
-    async function cadastrar() {
+    async function login() {
 
-      try {
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
 
-        const resposta = await fetch("https://sistema-ong.onrender.com/atendidos", {
+      if(email === "admin@ong.com" && senha === "123456"){
 
-          method: "POST",
+        window.location.href = "dashboard.html";
 
-          headers: {
-            "Content-Type": "application/json"
-          },
+      } else {
 
-          body: JSON.stringify({
-
-            nome: document.getElementById("nome").value,
-            sobrenome: document.getElementById("sobrenome").value,
-            telefone: document.getElementById("telefone").value,
-            cep: document.getElementById("cep").value,
-            rua: document.getElementById("rua").value,
-            bairro: document.getElementById("bairro").value,
-            cidade: document.getElementById("cidade").value,
-            estado: document.getElementById("estado").value
-
-          })
-
-        });
-
-        const texto = await resposta.text();
-
-        alert(texto);
-
-      } catch (erro) {
-
-        console.log(erro);
-
-        alert("Erro ao conectar com servidor");
+        alert("Email ou senha inválidos");
 
       }
 
