@@ -136,26 +136,31 @@ app.post("/atendidos", (req, res) => {
 // LISTAR
 app.get("/atendidos", (req, res) => {
 
-  db.query(
+db.query(`
+DROP TABLE IF EXISTS atendidos
+`);
 
-    "SELECT * FROM atendidos ORDER BY id DESC",
+db.query(`
+CREATE TABLE atendidos (
 
-    (err, result) => {
+  id INT AUTO_INCREMENT PRIMARY KEY,
 
-      if(err){
+  nome VARCHAR(100),
+  sobrenome VARCHAR(100),
+  cpf VARCHAR(30),
+  telefone VARCHAR(30),
 
-        console.log(err);
+  cep VARCHAR(20),
+  rua VARCHAR(100),
+  numero VARCHAR(20),
+  complemento VARCHAR(100),
 
-        return res.send([]);
+  bairro VARCHAR(100),
+  cidade VARCHAR(100),
+  estado VARCHAR(100)
 
-      }
-
-      res.json(result);
-
-    }
-
-  );
-
+)
+`);
 });
 
 // SERVIDOR
