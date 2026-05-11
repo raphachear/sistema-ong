@@ -7,7 +7,10 @@
 
 <title>Lista de Atendidos</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet"
+>
 
 <link rel="stylesheet" href="style.css">
 
@@ -38,11 +41,11 @@
 <input
 id="busca"
 class="form-control mb-4"
-placeholder="Buscar"
+placeholder="Buscar por nome, CPF ou cidade"
 onkeyup="listar()"
 >
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 
 <thead class="table-dark">
 
@@ -64,6 +67,40 @@ onkeyup="listar()"
 </div>
 
 </div>
+
+<!-- MODAL -->
+
+<div class="modal fade" id="modalFicha" tabindex="-1">
+
+<div class="modal-dialog modal-xl">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h5 class="modal-title">
+Ficha Social Completa
+</h5>
+
+<button
+type="button"
+class="btn-close"
+data-bs-dismiss="modal"
+></button>
+
+</div>
+
+<div class="modal-body" id="conteudoFicha">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 
@@ -108,6 +145,13 @@ async function listar(){
         <td>
 
           <button
+            class="btn btn-info btn-sm"
+            onclick="visualizar(${item.id})"
+          >
+            Visualizar
+          </button>
+
+          <button
             class="btn btn-warning btn-sm"
             onclick="editar(${item.id})"
           >
@@ -119,6 +163,13 @@ async function listar(){
             onclick="excluirCadastro(${item.id})"
           >
             Excluir
+          </button>
+
+          <button
+            class="btn btn-primary btn-sm"
+            onclick="gerarPDF(${item.id})"
+          >
+            PDF
           </button>
 
         </td>
@@ -145,7 +196,7 @@ function editar(id){
 async function excluirCadastro(id){
 
   const confirmar = confirm(
-    "Deseja excluir?"
+    "Deseja excluir este cadastro?"
   );
 
   if(!confirmar) return;
@@ -162,7 +213,133 @@ async function excluirCadastro(id){
 
   );
 
+  alert("Cadastro excluído!");
+
   listar();
+
+}
+
+function visualizar(id){
+
+  const item = atendidos.find(a => a.id == id);
+
+  document.getElementById("conteudoFicha").innerHTML = `
+
+    <h3>${item.nome}</h3>
+
+    <hr>
+
+    <h4>Dados Pessoais</h4>
+
+    <p><b>CPF:</b> ${item.cpf || ""}</p>
+    <p><b>RG:</b> ${item.rg || ""}</p>
+    <p><b>Nascimento:</b> ${item.nascimento || ""}</p>
+    <p><b>Sexo:</b> ${item.sexo || ""}</p>
+    <p><b>Estado Civil:</b> ${item.estado_civil || ""}</p>
+
+    <hr>
+
+    <h4>Contato</h4>
+
+    <p><b>Telefone 1:</b> ${item.telefone1 || ""}</p>
+    <p><b>Telefone 2:</b> ${item.telefone2 || ""}</p>
+
+    <hr>
+
+    <h4>Endereço</h4>
+
+    <p>
+    ${item.rua || ""}, ${item.numero || ""}
+    </p>
+
+    <p>
+    ${item.bairro || ""}
+    </p>
+
+    <p>
+    ${item.cidade || ""} - ${item.estado || ""}
+    </p>
+
+    <p><b>CEP:</b> ${item.cep || ""}</p>
+
+    <hr>
+
+    <h4>Informações Sociais</h4>
+
+    <p>
+    <b>Situação Profissional:</b>
+    ${item.situacao_profissional || ""}
+    </p>
+
+    <p>
+    <b>Renda Familiar:</b>
+    ${item.renda_familiar || ""}
+    </p>
+
+    <p>
+    <b>Motivo Atendimento:</b>
+    ${item.motivo || ""}
+    </p>
+
+    <p>
+    <b>Observações:</b>
+    ${item.observacoes || ""}
+    </p>
+
+  `;
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("modalFicha")
+  );
+
+  modal.show();
+
+}
+
+async function gerarPDF(id){
+
+  const item = atendidos.find(a => a.id == id);
+
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+
+  let y = 20;
+
+  doc.setFontSize(18);
+
+  doc.text("FICHA SOCIAL - ONG", 60, y);
+
+  y += 20;
+
+  doc.setFontSize(12);
+
+  function linha(texto){
+
+    doc.text(texto, 20, y);
+
+    y += 8;
+
+  }
+
+  linha("Nome: " + (item.nome || ""));
+  linha("CPF: " + (item.cpf || ""));
+  linha("RG: " + (item.rg || ""));
+  linha("Telefone: " + (item.telefone1 || ""));
+  linha("Cidade: " + (item.cidade || ""));
+  linha("Motivo: " + (item.motivo || ""));
+
+  y += 20;
+
+  doc.line(20, y, 80, y);
+  doc.line(120, y, 180, y);
+
+  y += 5;
+
+  doc.text("Responsável ONG", 25, y);
+  doc.text("Atendido", 140, y);
+
+  doc.save("ficha-social.pdf");
 
 }
 
