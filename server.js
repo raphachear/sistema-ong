@@ -4,115 +4,136 @@ const path = require("path");
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// CONEXÃO MYSQL
+// MYSQL
 const db = mysql.createConnection({
+
   host: "roundhouse.proxy.rlwy.net",
   user: "root",
   password: "FaJhwkZcSpsIDBZIhKjJIvbrFvaZngmZ",
   database: "railway",
   port: 20614
+
 });
 
 // CONECTAR MYSQL
 db.connect((err) => {
 
-  if (err) {
+  if(err){
 
-    console.log("Erro MySQL:", err);
+    console.log(err);
 
   } else {
 
     console.log("MySQL conectado!");
 
-    // APAGAR TABELA ANTIGA
-    db.query("DROP TABLE IF EXISTS atendidos", (erroDrop) => {
+    // TABELA
+    db.query(`
 
-      if (erroDrop) {
+      CREATE TABLE IF NOT EXISTS atendidos (
 
-        console.log(erroDrop);
+        id INT AUTO_INCREMENT PRIMARY KEY,
 
-      } else {
+        nome VARCHAR(255),
+        filiacao VARCHAR(255),
 
-        console.log("Tabela antiga removida");
+        nascimento VARCHAR(100),
+        sexo VARCHAR(20),
+        estado_civil VARCHAR(100),
+        naturalidade VARCHAR(100),
 
-        // CRIAR TABELA NOVA
-        db.query(`
+        cor VARCHAR(100),
 
-          CREATE TABLE atendidos (
+        telefone1 VARCHAR(50),
+        telefone2 VARCHAR(50),
 
-            id INT AUTO_INCREMENT PRIMARY KEY,
+        cep VARCHAR(20),
+        rua VARCHAR(255),
+        numero VARCHAR(50),
+        complemento VARCHAR(255),
 
-            nome VARCHAR(100),
-            sobrenome VARCHAR(100),
+        bairro VARCHAR(255),
+        cidade VARCHAR(255),
+        estado VARCHAR(255),
 
-            cpf VARCHAR(30),
-            telefone VARCHAR(30),
+        referencia TEXT,
+        motivo TEXT,
 
-            cep VARCHAR(20),
-            rua VARCHAR(100),
-            numero VARCHAR(20),
-            complemento VARCHAR(100),
+        rg VARCHAR(100),
+        cpf VARCHAR(100),
+        titulo_eleitor VARCHAR(100),
 
-            bairro VARCHAR(100),
-            cidade VARCHAR(100),
-            estado VARCHAR(100)
+        zona VARCHAR(50),
+        secao VARCHAR(50),
 
-          )
+        carteira_trabalho VARCHAR(100),
 
-        `, (erroCreate) => {
+        certidao VARCHAR(100),
 
-          if (erroCreate) {
+        programa_federal VARCHAR(255),
+        assistencia VARCHAR(255),
 
-            console.log(erroCreate);
+        situacao_profissional VARCHAR(255),
+        tempo_desempregado VARCHAR(100),
 
-          } else {
+        composicao_familiar LONGTEXT,
 
-            console.log("Tabela atendidos criada!");
+        renda_familiar VARCHAR(100),
 
-          }
+        situacao_habitacional VARCHAR(255),
+        tempo_moradia VARCHAR(100),
+        comodos VARCHAR(100),
 
-        });
+        tipo_construcao VARCHAR(255),
 
-      }
+        abastecimento_agua VARCHAR(255),
 
-    });
+        iluminacao VARCHAR(255),
+
+        medicamentos VARCHAR(100),
+        gas VARCHAR(100),
+        alimentacao VARCHAR(100),
+        contas VARCHAR(100),
+        outras_despesas TEXT,
+        total_despesas VARCHAR(100),
+
+        saude_familia LONGTEXT,
+
+        fumante VARCHAR(50),
+        fumante_quem VARCHAR(255),
+
+        alcoolista VARCHAR(50),
+        alcoolista_quem VARCHAR(255),
+
+        drogas VARCHAR(50),
+        drogas_quem VARCHAR(255),
+
+        observacoes LONGTEXT,
+
+        data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+      )
+
+    `);
 
   }
 
 });
 
-// TESTE API
+// TESTE
 app.get("/teste", (req, res) => {
 
   res.send("API funcionando");
 
 });
 
-// CADASTRAR ATENDIDO
+// CADASTRAR
 app.post("/atendidos", (req, res) => {
 
-  const {
-
-    nome,
-    sobrenome,
-
-    cpf,
-    telefone,
-
-    cep,
-    rua,
-    numero,
-    complemento,
-
-    bairro,
-    cidade,
-    estado
-
-  } = req.body;
+  const dados = req.body;
 
   db.query(
 
@@ -120,10 +141,17 @@ app.post("/atendidos", (req, res) => {
     INSERT INTO atendidos (
 
       nome,
-      sobrenome,
+      filiacao,
 
-      cpf,
-      telefone,
+      nascimento,
+      sexo,
+      estado_civil,
+      naturalidade,
+
+      cor,
+
+      telefone1,
+      telefone2,
 
       cep,
       rua,
@@ -132,35 +160,175 @@ app.post("/atendidos", (req, res) => {
 
       bairro,
       cidade,
-      estado
+      estado,
+
+      referencia,
+      motivo,
+
+      rg,
+      cpf,
+      titulo_eleitor,
+
+      zona,
+      secao,
+
+      carteira_trabalho,
+
+      certidao,
+
+      programa_federal,
+      assistencia,
+
+      situacao_profissional,
+      tempo_desempregado,
+
+      composicao_familiar,
+
+      renda_familiar,
+
+      situacao_habitacional,
+      tempo_moradia,
+      comodos,
+
+      tipo_construcao,
+
+      abastecimento_agua,
+
+      iluminacao,
+
+      medicamentos,
+      gas,
+      alimentacao,
+      contas,
+      outras_despesas,
+      total_despesas,
+
+      saude_familia,
+
+      fumante,
+      fumante_quem,
+
+      alcoolista,
+      alcoolista_quem,
+
+      drogas,
+      drogas_quem,
+
+      observacoes
 
     )
 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (
+
+      ?,?,?,?,?,?,
+      ?,?,?,
+      ?,?,?,?,
+      ?,?,?,
+      ?,?,
+      ?,?,?,
+      ?,?,
+      ?,
+      ?,
+      ?,?,
+      ?,?,
+      ?,
+      ?,
+      ?,?,?,
+      ?,
+      ?,
+      ?,?,?,?,?,
+      ?,
+      ?,?,
+      ?,?,
+      ?,?,
+      ?
+
+    )
     `,
 
     [
 
-      nome,
-      sobrenome,
+      dados.nome,
+      dados.filiacao,
 
-      cpf,
-      telefone,
+      dados.nascimento,
+      dados.sexo,
+      dados.estado_civil,
+      dados.naturalidade,
 
-      cep,
-      rua,
-      numero,
-      complemento,
+      dados.cor,
 
-      bairro,
-      cidade,
-      estado
+      dados.telefone1,
+      dados.telefone2,
+
+      dados.cep,
+      dados.rua,
+      dados.numero,
+      dados.complemento,
+
+      dados.bairro,
+      dados.cidade,
+      dados.estado,
+
+      dados.referencia,
+      dados.motivo,
+
+      dados.rg,
+      dados.cpf,
+      dados.titulo_eleitor,
+
+      dados.zona,
+      dados.secao,
+
+      dados.carteira_trabalho,
+
+      dados.certidao,
+
+      dados.programa_federal,
+      dados.assistencia,
+
+      dados.situacao_profissional,
+      dados.tempo_desempregado,
+
+      JSON.stringify(dados.composicao_familiar),
+
+      dados.renda_familiar,
+
+      dados.situacao_habitacional,
+      dados.tempo_moradia,
+      dados.comodos,
+
+      dados.tipo_construcao,
+
+      dados.abastecimento_agua,
+
+      dados.iluminacao,
+
+      dados.medicamentos,
+      dados.gas,
+      dados.alimentacao,
+      dados.contas,
+      dados.outras_despesas,
+      dados.total_despesas,
+
+      JSON.stringify(dados.saude_familia),
+
+      dados.fumante,
+      dados.fumante_quem,
+
+      dados.alcoolista,
+      dados.alcoolista_quem,
+
+      dados.drogas,
+      dados.drogas_quem,
+
+      dados.observacoes
 
     ],
 
-    (erro, resultado) => {
+    (erro) => {
 
-      if (erro) {
+      if(erro){
 
         console.log(erro);
 
@@ -168,7 +336,7 @@ app.post("/atendidos", (req, res) => {
 
       }
 
-      res.send("Atendido cadastrado com sucesso!");
+      res.send("Cadastro realizado com sucesso!");
 
     }
 
@@ -176,7 +344,7 @@ app.post("/atendidos", (req, res) => {
 
 });
 
-// LISTAR ATENDIDOS
+// LISTAR
 app.get("/atendidos", (req, res) => {
 
   db.query(
@@ -185,7 +353,7 @@ app.get("/atendidos", (req, res) => {
 
     (erro, resultado) => {
 
-      if (erro) {
+      if(erro){
 
         console.log(erro);
 
@@ -206,6 +374,6 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
 
-  console.log("Servidor rodando na porta " + PORT);
+  console.log("Servidor rodando");
 
 });
