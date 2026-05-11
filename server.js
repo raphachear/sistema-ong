@@ -22,7 +22,7 @@ const db = mysql.createConnection({
 // CONECTAR MYSQL
 db.connect((err) => {
 
-  if(err){
+  if (err) {
 
     console.log(err);
 
@@ -33,7 +33,7 @@ db.connect((err) => {
     // APAGAR TABELA ANTIGA
     db.query("DROP TABLE IF EXISTS atendidos", (erroDrop) => {
 
-      if(erroDrop){
+      if (erroDrop) {
 
         console.log(erroDrop);
 
@@ -130,7 +130,7 @@ db.connect((err) => {
 
         `, (erroCreate) => {
 
-          if(erroCreate){
+          if (erroCreate) {
 
             console.log(erroCreate);
 
@@ -162,200 +162,99 @@ app.post("/atendidos", (req, res) => {
 
   const dados = req.body;
 
+  const atendido = {
+
+    nome: dados.nome,
+    filiacao: dados.filiacao,
+
+    nascimento: dados.nascimento,
+    sexo: dados.sexo,
+    estado_civil: dados.estado_civil,
+    naturalidade: dados.naturalidade,
+
+    cor: dados.cor,
+
+    telefone1: dados.telefone1,
+    telefone2: dados.telefone2,
+
+    cep: dados.cep,
+    rua: dados.rua,
+    numero: dados.numero,
+    complemento: dados.complemento,
+
+    bairro: dados.bairro,
+    cidade: dados.cidade,
+    estado: dados.estado,
+
+    referencia: dados.referencia,
+    motivo: dados.motivo,
+
+    rg: dados.rg,
+    cpf: dados.cpf,
+    titulo_eleitor: dados.titulo_eleitor,
+
+    zona: dados.zona,
+    secao: dados.secao,
+
+    carteira_trabalho: dados.carteira_trabalho,
+
+    certidao: dados.certidao,
+
+    programa_federal: dados.programa_federal,
+    assistencia: dados.assistencia,
+
+    situacao_profissional: dados.situacao_profissional,
+    tempo_desempregado: dados.tempo_desempregado,
+
+    composicao_familiar: JSON.stringify(
+      dados.composicao_familiar || []
+    ),
+
+    renda_familiar: dados.renda_familiar,
+
+    situacao_habitacional: dados.situacao_habitacional,
+    tempo_moradia: dados.tempo_moradia,
+    comodos: dados.comodos,
+
+    tipo_construcao: dados.tipo_construcao,
+
+    abastecimento_agua: dados.abastecimento_agua,
+
+    iluminacao: dados.iluminacao,
+
+    medicamentos: dados.medicamentos,
+    gas: dados.gas,
+    alimentacao: dados.alimentacao,
+    contas: dados.contas,
+    outras_despesas: dados.outras_despesas,
+    total_despesas: dados.total_despesas,
+
+    saude_familia: JSON.stringify(
+      dados.saude_familia || []
+    ),
+
+    fumante: dados.fumante,
+    fumante_quem: dados.fumante_quem,
+
+    alcoolista: dados.alcoolista,
+    alcoolista_quem: dados.alcoolista_quem,
+
+    drogas: dados.drogas,
+    drogas_quem: dados.drogas_quem,
+
+    observacoes: dados.observacoes
+
+  };
+
   db.query(
 
-    `
-    INSERT INTO atendidos (
+    "INSERT INTO atendidos SET ?",
 
-      nome,
-      filiacao,
-
-      nascimento,
-      sexo,
-      estado_civil,
-      naturalidade,
-
-      cor,
-
-      telefone1,
-      telefone2,
-
-      cep,
-      rua,
-      numero,
-      complemento,
-
-      bairro,
-      cidade,
-      estado,
-
-      referencia,
-      motivo,
-
-      rg,
-      cpf,
-      titulo_eleitor,
-
-      zona,
-      secao,
-
-      carteira_trabalho,
-
-      certidao,
-
-      programa_federal,
-      assistencia,
-
-      situacao_profissional,
-      tempo_desempregado,
-
-      composicao_familiar,
-
-      renda_familiar,
-
-      situacao_habitacional,
-      tempo_moradia,
-      comodos,
-
-      tipo_construcao,
-
-      abastecimento_agua,
-
-      iluminacao,
-
-      medicamentos,
-      gas,
-      alimentacao,
-      contas,
-      outras_despesas,
-      total_despesas,
-
-      saude_familia,
-
-      fumante,
-      fumante_quem,
-
-      alcoolista,
-      alcoolista_quem,
-
-      drogas,
-      drogas_quem,
-
-      observacoes
-
-    )
-
-    VALUES (
-
-      ?,?,?,?,?,?,
-      ?,?,?,
-      ?,?,?,?,
-      ?,?,?,
-      ?,?,
-      ?,?,?,
-      ?,?,
-      ?,
-      ?,
-      ?,?,
-      ?,?,
-      ?,
-      ?,
-      ?,?,?,
-      ?,
-      ?,
-      ?,?,?,?,
-      ?,
-      ?,?,
-      ?,?,
-      ?,?,
-      ?
-
-    )
-    `,
-
-    [
-
-      dados.nome,
-      dados.filiacao,
-
-      dados.nascimento,
-      dados.sexo,
-      dados.estado_civil,
-      dados.naturalidade,
-
-      dados.cor,
-
-      dados.telefone1,
-      dados.telefone2,
-
-      dados.cep,
-      dados.rua,
-      dados.numero,
-      dados.complemento,
-
-      dados.bairro,
-      dados.cidade,
-      dados.estado,
-
-      dados.referencia,
-      dados.motivo,
-
-      dados.rg,
-      dados.cpf,
-      dados.titulo_eleitor,
-
-      dados.zona,
-      dados.secao,
-
-      dados.carteira_trabalho,
-
-      dados.certidao,
-
-      dados.programa_federal,
-      dados.assistencia,
-
-      dados.situacao_profissional,
-      dados.tempo_desempregado,
-
-      JSON.stringify(dados.composicao_familiar || []),
-
-      dados.renda_familiar,
-
-      dados.situacao_habitacional,
-      dados.tempo_moradia,
-      dados.comodos,
-
-      dados.tipo_construcao,
-
-      dados.abastecimento_agua,
-
-      dados.iluminacao,
-
-      dados.medicamentos,
-      dados.gas,
-      dados.alimentacao,
-      dados.contas,
-      dados.outras_despesas,
-      dados.total_despesas,
-
-      JSON.stringify(dados.saude_familia || []),
-
-      dados.fumante,
-      dados.fumante_quem,
-
-      dados.alcoolista,
-      dados.alcoolista_quem,
-
-      dados.drogas,
-      dados.drogas_quem,
-
-      dados.observacoes
-
-    ],
+    atendido,
 
     (erro) => {
 
-      if(erro){
+      if (erro) {
 
         console.log(erro);
 
@@ -380,7 +279,7 @@ app.get("/atendidos", (req, res) => {
 
     (erro, resultado) => {
 
-      if(erro){
+      if (erro) {
 
         console.log(erro);
 
