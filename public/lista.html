@@ -304,45 +304,210 @@ async function gerarPDF(id){
 
   const doc = new jsPDF();
 
-  let y = 20;
+  let y = 15;
 
-  doc.setFontSize(18);
+  function titulo(texto){
 
-  doc.text("FICHA SOCIAL - ONG", 60, y);
+    doc.setFontSize(15);
+    doc.setFont(undefined, "bold");
 
-  y += 20;
+    doc.text(texto, 15, y);
 
-  doc.setFontSize(12);
+    y += 8;
 
-  function linha(texto){
+    doc.setDrawColor(0);
 
-    doc.text(texto, 20, y);
+    doc.line(15, y, 195, y);
 
     y += 8;
 
   }
 
-  linha("Nome: " + (item.nome || ""));
-  linha("CPF: " + (item.cpf || ""));
-  linha("RG: " + (item.rg || ""));
-  linha("Telefone: " + (item.telefone1 || ""));
-  linha("Cidade: " + (item.cidade || ""));
-  linha("Motivo: " + (item.motivo || ""));
+  function linha(label, valor){
 
-  y += 20;
+    doc.setFontSize(11);
+
+    doc.setFont(undefined, "bold");
+
+    doc.text(label, 15, y);
+
+    doc.setFont(undefined, "normal");
+
+    doc.text(String(valor || ""), 70, y);
+
+    y += 7;
+
+  }
+
+  // CABEÇALHO
+
+  doc.setFontSize(18);
+
+  doc.setFont(undefined, "bold");
+
+  doc.text("FICHA SOCIAL - ONG", 60, y);
+
+  y += 15;
+
+  // DADOS PESSOAIS
+
+  titulo("DADOS PESSOAIS");
+
+  linha("Nome:", item.nome);
+  linha("Filiação:", item.filiacao);
+  linha("Nascimento:", item.nascimento);
+  linha("Sexo:", item.sexo);
+  linha("Estado Civil:", item.estado_civil);
+  linha("Naturalidade:", item.naturalidade);
+  linha("Cor/Raça:", item.cor);
+
+  // DOCUMENTOS
+
+  titulo("DOCUMENTAÇÃO");
+
+  linha("CPF:", item.cpf);
+  linha("RG:", item.rg);
+  linha("Título Eleitor:", item.titulo_eleitor);
+  linha("Zona:", item.zona);
+  linha("Seção:", item.secao);
+  linha("Carteira Trabalho:", item.carteira_trabalho);
+
+  // CONTATO
+
+  titulo("CONTATO");
+
+  linha("Telefone 1:", item.telefone1);
+  linha("Telefone 2:", item.telefone2);
+
+  // ENDEREÇO
+
+  titulo("ENDEREÇO");
+
+  linha("CEP:", item.cep);
+  linha("Rua:", item.rua);
+  linha("Número:", item.numero);
+  linha("Complemento:", item.complemento);
+  linha("Bairro:", item.bairro);
+  linha("Cidade:", item.cidade);
+  linha("Estado:", item.estado);
+  linha("Referência:", item.referencia);
+
+  // SITUAÇÃO SOCIAL
+
+  titulo("SITUAÇÃO SOCIAL");
+
+  linha(
+    "Situação Profissional:",
+    item.situacao_profissional
+  );
+
+  linha(
+    "Tempo Desempregado:",
+    item.tempo_desempregado
+  );
+
+  linha(
+    "Renda Familiar:",
+    item.renda_familiar
+  );
+
+  // HABITAÇÃO
+
+  titulo("HABITAÇÃO");
+
+  linha(
+    "Situação Habitacional:",
+    item.situacao_habitacional
+  );
+
+  linha(
+    "Tempo Moradia:",
+    item.tempo_moradia
+  );
+
+  linha(
+    "Cômodos:",
+    item.comodos
+  );
+
+  linha(
+    "Tipo Construção:",
+    item.tipo_construcao
+  );
+
+  linha(
+    "Abastecimento Água:",
+    item.abastecimento_agua
+  );
+
+  // DESPESAS
+
+  titulo("DESPESAS");
+
+  linha("Medicamentos:", item.medicamentos);
+  linha("Gás:", item.gas);
+  linha("Alimentação:", item.alimentacao);
+  linha("Contas:", item.contas);
+  linha(
+    "Outras Despesas:",
+    item.outras_despesas
+  );
+
+  // MOTIVO
+
+  titulo("MOTIVO DO ATENDIMENTO");
+
+  doc.setFontSize(11);
+
+  doc.setFont(undefined, "normal");
+
+  const motivo = doc.splitTextToSize(
+
+    item.motivo || "",
+
+    170
+
+  );
+
+  doc.text(motivo, 15, y);
+
+  y += motivo.length * 7 + 10;
+
+  // OBSERVAÇÕES
+
+  titulo("OBSERVAÇÕES");
+
+  const obs = doc.splitTextToSize(
+
+    item.observacoes || "",
+
+    170
+
+  );
+
+  doc.text(obs, 15, y);
+
+  y += obs.length * 7 + 20;
+
+  // ASSINATURAS
 
   doc.line(20, y, 80, y);
   doc.line(120, y, 180, y);
 
-  y += 5;
+  y += 6;
 
-  doc.text("Responsável ONG", 25, y);
+  doc.text("Responsável ONG", 28, y);
   doc.text("Atendido", 140, y);
 
-  doc.save("ficha-social.pdf");
+  doc.save(
+
+    "ficha-social-" +
+    item.nome +
+    ".pdf"
+
+  );
 
 }
-
 listar();
 
 </script>
