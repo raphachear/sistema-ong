@@ -67,6 +67,40 @@ onkeyup="listar()"
 
 </div>
 
+<!-- MODAL -->
+
+<div class="modal fade" id="modalFicha" tabindex="-1">
+
+<div class="modal-dialog modal-xl">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h5 class="modal-title">
+Ficha Social
+</h5>
+
+<button
+type="button"
+class="btn-close"
+data-bs-dismiss="modal"
+></button>
+
+</div>
+
+<div class="modal-body" id="conteudoFicha">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 
 let atendidos = [];
@@ -107,6 +141,13 @@ async function listar(){
         <td>
 
           <button
+            class="btn btn-info btn-sm"
+            onclick="visualizar(${item.id})"
+          >
+            Visualizar
+          </button>
+
+          <button
             class="btn btn-primary btn-sm"
             onclick="gerarPDF(${item.id})"
           >
@@ -127,6 +168,73 @@ async function listar(){
 
 }
 
+function visualizar(id){
+
+  const item = atendidos.find(a => a.id == id);
+
+  document.getElementById("conteudoFicha").innerHTML = `
+
+    <h3>${item.nome}</h3>
+
+    <hr>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <b>CPF:</b> ${item.cpf}
+      </div>
+
+      <div class="col-md-6">
+        <b>RG:</b> ${item.rg}
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <b>Telefone:</b> ${item.telefone1}
+      </div>
+
+      <div class="col-md-6 mt-3">
+        <b>Estado Civil:</b> ${item.estado_civil}
+      </div>
+
+      <div class="col-md-12 mt-3">
+        <b>Endereço:</b>
+        ${item.rua}, ${item.numero}
+      </div>
+
+      <div class="col-md-4 mt-3">
+        <b>Bairro:</b> ${item.bairro}
+      </div>
+
+      <div class="col-md-4 mt-3">
+        <b>Cidade:</b> ${item.cidade}
+      </div>
+
+      <div class="col-md-4 mt-3">
+        <b>Estado:</b> ${item.estado}
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <b>Motivo do atendimento:</b>
+        <p>${item.motivo || ""}</p>
+      </div>
+
+      <div class="col-md-12 mt-4">
+        <b>Observações:</b>
+        <p>${item.observacoes || ""}</p>
+      </div>
+
+    </div>
+
+  `;
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("modalFicha")
+  );
+
+  modal.show();
+
+}
+
 async function gerarPDF(id){
 
   const item = atendidos.find(a => a.id == id);
@@ -139,19 +247,13 @@ async function gerarPDF(id){
 
   doc.setFontSize(18);
 
-  doc.text("FICHA SOCIAL - ONG", 70, y);
+  doc.text("FICHA SOCIAL - ONG", 65, y);
 
   y += 20;
 
   doc.setFontSize(12);
 
   doc.text("Nome: " + item.nome, 20, y);
-  y += 10;
-
-  doc.text("Filiação: " + item.filiacao, 20, y);
-  y += 10;
-
-  doc.text("Nascimento: " + item.nascimento, 20, y);
   y += 10;
 
   doc.text("CPF: " + item.cpf, 20, y);
@@ -163,24 +265,20 @@ async function gerarPDF(id){
   doc.text("Telefone: " + item.telefone1, 20, y);
   y += 10;
 
-  doc.text("Endereço: " + item.rua + ", " + item.numero, 20, y);
-  y += 10;
-
-  doc.text("Bairro: " + item.bairro, 20, y);
-  y += 10;
-
   doc.text("Cidade: " + item.cidade, 20, y);
   y += 10;
 
   doc.text("Estado: " + item.estado, 20, y);
-  y += 15;
 
-  doc.text("Motivo do atendimento:", 20, y);
+  y += 20;
+
+  doc.text("Motivo:", 20, y);
+
   y += 10;
 
   doc.text(item.motivo || "", 20, y);
 
-  y += 30;
+  y += 40;
 
   doc.line(20, y, 80, y);
   doc.line(120, y, 180, y);
