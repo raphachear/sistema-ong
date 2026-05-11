@@ -16,6 +16,55 @@ rel="stylesheet"
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+<style>
+
+.section-title{
+
+  background:#0d6efd;
+  color:white;
+
+  padding:10px;
+
+  border-radius:8px;
+
+  margin-top:25px;
+  margin-bottom:20px;
+
+  font-size:20px;
+  font-weight:bold;
+
+}
+
+.info-box{
+
+  background:#f8f9fa;
+
+  border-radius:10px;
+
+  padding:15px;
+
+  margin-bottom:15px;
+
+  border:1px solid #dee2e6;
+
+}
+
+.info-label{
+
+  font-weight:bold;
+
+}
+
+.modal-body{
+
+  max-height:80vh;
+
+  overflow:auto;
+
+}
+
+</style>
+
 </head>
 
 <body>
@@ -36,7 +85,9 @@ rel="stylesheet"
 
 <div class="container-box">
 
-<h1>Lista de Atendidos</h1>
+<h1 class="mb-4">
+Lista de Atendidos
+</h1>
 
 <input
 id="busca"
@@ -45,7 +96,7 @@ placeholder="Buscar por nome, CPF ou cidade"
 onkeyup="listar()"
 >
 
-<table class="table table-bordered table-hover">
+<table class="table table-hover table-bordered">
 
 <thead class="table-dark">
 
@@ -54,7 +105,7 @@ onkeyup="listar()"
 <th>Nome</th>
 <th>CPF</th>
 <th>Cidade</th>
-<th>Ações</th>
+<th width="350">Ações</th>
 
 </tr>
 
@@ -70,7 +121,11 @@ onkeyup="listar()"
 
 <!-- MODAL -->
 
-<div class="modal fade" id="modalFicha" tabindex="-1">
+<div
+class="modal fade"
+id="modalFicha"
+tabindex="-1"
+>
 
 <div class="modal-dialog modal-xl">
 
@@ -78,9 +133,9 @@ onkeyup="listar()"
 
 <div class="modal-header">
 
-<h5 class="modal-title">
+<h4 class="modal-title">
 Ficha Social Completa
-</h5>
+</h4>
 
 <button
 type="button"
@@ -138,9 +193,9 @@ async function listar(){
 
       <tr>
 
-        <td>${item.nome}</td>
-        <td>${item.cpf}</td>
-        <td>${item.cidade}</td>
+        <td>${item.nome || ""}</td>
+        <td>${item.cpf || ""}</td>
+        <td>${item.cidade || ""}</td>
 
         <td>
 
@@ -166,7 +221,7 @@ async function listar(){
           </button>
 
           <button
-            class="btn btn-primary btn-sm"
+            class="btn btn-success btn-sm"
             onclick="gerarPDF(${item.id})"
           >
             PDF
@@ -207,7 +262,7 @@ async function excluirCadastro(id){
 
     {
 
-      method: "DELETE"
+      method:"DELETE"
 
     }
 
@@ -219,77 +274,154 @@ async function excluirCadastro(id){
 
 }
 
+function secao(titulo){
+
+  return `
+    <div class="section-title">
+      ${titulo}
+    </div>
+  `;
+
+}
+
+function campo(label, valor){
+
+  return `
+
+    <div class="col-md-6">
+
+      <div class="info-box">
+
+        <div class="info-label">
+          ${label}
+        </div>
+
+        <div>
+          ${valor || ""}
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
 function visualizar(id){
 
-  const item = atendidos.find(a => a.id == id);
+  const item =
+    atendidos.find(a => a.id == id);
 
-  document.getElementById("conteudoFicha").innerHTML = `
+  document.getElementById(
+    "conteudoFicha"
+  ).innerHTML = `
 
-    <h3>${item.nome}</h3>
+  <div class="container-fluid">
 
-    <hr>
+    ${secao("Dados Pessoais")}
 
-    <h4>Dados Pessoais</h4>
+    <div class="row">
 
-    <p><b>CPF:</b> ${item.cpf || ""}</p>
-    <p><b>RG:</b> ${item.rg || ""}</p>
-    <p><b>Nascimento:</b> ${item.nascimento || ""}</p>
-    <p><b>Sexo:</b> ${item.sexo || ""}</p>
-    <p><b>Estado Civil:</b> ${item.estado_civil || ""}</p>
+      ${campo("Nome", item.nome)}
+      ${campo("Filiação", item.filiacao)}
+      ${campo("Nascimento", item.nascimento)}
+      ${campo("Sexo", item.sexo)}
+      ${campo("Estado Civil", item.estado_civil)}
+      ${campo("Naturalidade", item.naturalidade)}
+      ${campo("Cor/Raça", item.cor)}
 
-    <hr>
+    </div>
 
-    <h4>Contato</h4>
+    ${secao("Contato")}
 
-    <p><b>Telefone 1:</b> ${item.telefone1 || ""}</p>
-    <p><b>Telefone 2:</b> ${item.telefone2 || ""}</p>
+    <div class="row">
 
-    <hr>
+      ${campo("Telefone 1", item.telefone1)}
+      ${campo("Telefone 2", item.telefone2)}
 
-    <h4>Endereço</h4>
+    </div>
 
-    <p>
-    ${item.rua || ""}, ${item.numero || ""}
-    </p>
+    ${secao("Endereço")}
 
-    <p>
-    ${item.bairro || ""}
-    </p>
+    <div class="row">
 
-    <p>
-    ${item.cidade || ""} - ${item.estado || ""}
-    </p>
+      ${campo("CEP", item.cep)}
+      ${campo("Rua", item.rua)}
+      ${campo("Número", item.numero)}
+      ${campo("Complemento", item.complemento)}
+      ${campo("Bairro", item.bairro)}
+      ${campo("Cidade", item.cidade)}
+      ${campo("Estado", item.estado)}
 
-    <p><b>CEP:</b> ${item.cep || ""}</p>
+    </div>
 
-    <hr>
+    ${secao("Documentação")}
 
-    <h4>Informações Sociais</h4>
+    <div class="row">
 
-    <p>
-    <b>Situação Profissional:</b>
-    ${item.situacao_profissional || ""}
-    </p>
+      ${campo("CPF", item.cpf)}
+      ${campo("RG", item.rg)}
+      ${campo("Título Eleitor", item.titulo_eleitor)}
+      ${campo("Zona", item.zona)}
+      ${campo("Seção", item.secao)}
+      ${campo("Carteira Trabalho", item.carteira_trabalho)}
 
-    <p>
-    <b>Renda Familiar:</b>
-    ${item.renda_familiar || ""}
-    </p>
+    </div>
 
-    <p>
-    <b>Motivo Atendimento:</b>
-    ${item.motivo || ""}
-    </p>
+    ${secao("Situação Social")}
 
-    <p>
-    <b>Observações:</b>
-    ${item.observacoes || ""}
-    </p>
+    <div class="row">
+
+      ${campo("Situação Profissional", item.situacao_profissional)}
+      ${campo("Tempo Desempregado", item.tempo_desempregado)}
+      ${campo("Renda Familiar", item.renda_familiar)}
+
+    </div>
+
+    ${secao("Habitação")}
+
+    <div class="row">
+
+      ${campo("Situação Habitacional", item.situacao_habitacional)}
+      ${campo("Tempo Moradia", item.tempo_moradia)}
+      ${campo("Cômodos", item.comodos)}
+      ${campo("Tipo Construção", item.tipo_construcao)}
+      ${campo("Abastecimento Água", item.abastecimento_agua)}
+
+    </div>
+
+    ${secao("Despesas")}
+
+    <div class="row">
+
+      ${campo("Medicamentos", item.medicamentos)}
+      ${campo("Gás", item.gas)}
+      ${campo("Alimentação", item.alimentacao)}
+      ${campo("Contas", item.contas)}
+      ${campo("Outras Despesas", item.outras_despesas)}
+
+    </div>
+
+    ${secao("Atendimento Social")}
+
+    <div class="row">
+
+      ${campo("Motivo Atendimento", item.motivo)}
+      ${campo("Observações", item.observacoes)}
+
+    </div>
+
+  </div>
 
   `;
 
   const modal = new bootstrap.Modal(
-    document.getElementById("modalFicha")
+
+    document.getElementById(
+      "modalFicha"
+    )
+
   );
 
   modal.show();
@@ -298,24 +430,24 @@ function visualizar(id){
 
 async function gerarPDF(id){
 
-  const item = atendidos.find(a => a.id == id);
+  const item =
+    atendidos.find(a => a.id == id);
 
   const { jsPDF } = window.jspdf;
 
   const doc = new jsPDF();
 
-  let y = 15;
+  let y = 20;
 
   function titulo(texto){
 
     doc.setFontSize(15);
+
     doc.setFont(undefined, "bold");
 
     doc.text(texto, 15, y);
 
-    y += 8;
-
-    doc.setDrawColor(0);
+    y += 6;
 
     doc.line(15, y, 195, y);
 
@@ -325,76 +457,64 @@ async function gerarPDF(id){
 
   function linha(label, valor){
 
-    doc.setFontSize(11);
-
     doc.setFont(undefined, "bold");
 
     doc.text(label, 15, y);
 
     doc.setFont(undefined, "normal");
 
-    doc.text(String(valor || ""), 70, y);
+    const quebrado =
+      doc.splitTextToSize(
 
-    y += 7;
+        String(valor || ""),
+
+        120
+
+      );
+
+    doc.text(quebrado, 70, y);
+
+    y += quebrado.length * 7;
 
   }
 
-  // CABEÇALHO
-
   doc.setFontSize(18);
 
-  doc.setFont(undefined, "bold");
-
-  doc.text("FICHA SOCIAL - ONG", 60, y);
+  doc.text(
+    "FICHA SOCIAL - ONG",
+    55,
+    y
+  );
 
   y += 15;
 
-  // DADOS PESSOAIS
-
-  titulo("DADOS PESSOAIS");
+  titulo("Dados Pessoais");
 
   linha("Nome:", item.nome);
   linha("Filiação:", item.filiacao);
   linha("Nascimento:", item.nascimento);
   linha("Sexo:", item.sexo);
   linha("Estado Civil:", item.estado_civil);
-  linha("Naturalidade:", item.naturalidade);
-  linha("Cor/Raça:", item.cor);
 
-  // DOCUMENTOS
-
-  titulo("DOCUMENTAÇÃO");
-
-  linha("CPF:", item.cpf);
-  linha("RG:", item.rg);
-  linha("Título Eleitor:", item.titulo_eleitor);
-  linha("Zona:", item.zona);
-  linha("Seção:", item.secao);
-  linha("Carteira Trabalho:", item.carteira_trabalho);
-
-  // CONTATO
-
-  titulo("CONTATO");
+  titulo("Contato");
 
   linha("Telefone 1:", item.telefone1);
   linha("Telefone 2:", item.telefone2);
 
-  // ENDEREÇO
-
-  titulo("ENDEREÇO");
+  titulo("Endereço");
 
   linha("CEP:", item.cep);
   linha("Rua:", item.rua);
   linha("Número:", item.numero);
-  linha("Complemento:", item.complemento);
   linha("Bairro:", item.bairro);
   linha("Cidade:", item.cidade);
-  linha("Estado:", item.estado);
-  linha("Referência:", item.referencia);
 
-  // SITUAÇÃO SOCIAL
+  titulo("Documentação");
 
-  titulo("SITUAÇÃO SOCIAL");
+  linha("CPF:", item.cpf);
+  linha("RG:", item.rg);
+
+  titulo("Situação Social");
 
   linha(
     "Situação Profissional:",
@@ -402,112 +522,41 @@ async function gerarPDF(id){
   );
 
   linha(
-    "Tempo Desempregado:",
-    item.tempo_desempregado
-  );
-
-  linha(
     "Renda Familiar:",
     item.renda_familiar
   );
 
-  // HABITAÇÃO
+  titulo("Atendimento");
 
-  titulo("HABITAÇÃO");
+  linha("Motivo:", item.motivo);
 
-  linha(
-    "Situação Habitacional:",
-    item.situacao_habitacional
-  );
-
-  linha(
-    "Tempo Moradia:",
-    item.tempo_moradia
-  );
-
-  linha(
-    "Cômodos:",
-    item.comodos
-  );
-
-  linha(
-    "Tipo Construção:",
-    item.tipo_construcao
-  );
-
-  linha(
-    "Abastecimento Água:",
-    item.abastecimento_agua
-  );
-
-  // DESPESAS
-
-  titulo("DESPESAS");
-
-  linha("Medicamentos:", item.medicamentos);
-  linha("Gás:", item.gas);
-  linha("Alimentação:", item.alimentacao);
-  linha("Contas:", item.contas);
-  linha(
-    "Outras Despesas:",
-    item.outras_despesas
-  );
-
-  // MOTIVO
-
-  titulo("MOTIVO DO ATENDIMENTO");
-
-  doc.setFontSize(11);
-
-  doc.setFont(undefined, "normal");
-
-  const motivo = doc.splitTextToSize(
-
-    item.motivo || "",
-
-    170
-
-  );
-
-  doc.text(motivo, 15, y);
-
-  y += motivo.length * 7 + 10;
-
-  // OBSERVAÇÕES
-
-  titulo("OBSERVAÇÕES");
-
-  const obs = doc.splitTextToSize(
-
-    item.observacoes || "",
-
-    170
-
-  );
-
-  doc.text(obs, 15, y);
-
-  y += obs.length * 7 + 20;
-
-  // ASSINATURAS
+  y += 20;
 
   doc.line(20, y, 80, y);
   doc.line(120, y, 180, y);
 
-  y += 6;
+  y += 8;
 
-  doc.text("Responsável ONG", 28, y);
-  doc.text("Atendido", 140, y);
+  doc.text(
+    "Responsável ONG",
+    25,
+    y
+  );
+
+  doc.text(
+    "Assinatura Atendido",
+    120,
+    y
+  );
 
   doc.save(
 
-    "ficha-social-" +
-    item.nome +
-    ".pdf"
+    "ficha-social.pdf"
 
   );
 
 }
+
 listar();
 
 </script>
