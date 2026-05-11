@@ -30,94 +30,121 @@ db.connect((err) => {
 
     console.log("MySQL conectado!");
 
-    // TABELA
-    db.query(`
+    // APAGAR TABELA ANTIGA
+    db.query("DROP TABLE IF EXISTS atendidos", (erroDrop) => {
 
-      CREATE TABLE IF NOT EXISTS atendidos (
+      if(erroDrop){
 
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        console.log(erroDrop);
 
-        nome VARCHAR(255),
-        filiacao VARCHAR(255),
+      } else {
 
-        nascimento VARCHAR(100),
-        sexo VARCHAR(20),
-        estado_civil VARCHAR(100),
-        naturalidade VARCHAR(100),
+        console.log("Tabela antiga removida");
 
-        cor VARCHAR(100),
+        // CRIAR NOVA TABELA
+        db.query(`
 
-        telefone1 VARCHAR(50),
-        telefone2 VARCHAR(50),
+          CREATE TABLE atendidos (
 
-        cep VARCHAR(20),
-        rua VARCHAR(255),
-        numero VARCHAR(50),
-        complemento VARCHAR(255),
+            id INT AUTO_INCREMENT PRIMARY KEY,
 
-        bairro VARCHAR(255),
-        cidade VARCHAR(255),
-        estado VARCHAR(255),
+            nome VARCHAR(255),
+            filiacao VARCHAR(255),
 
-        referencia TEXT,
-        motivo TEXT,
+            nascimento VARCHAR(100),
+            sexo VARCHAR(20),
+            estado_civil VARCHAR(100),
+            naturalidade VARCHAR(100),
 
-        rg VARCHAR(100),
-        cpf VARCHAR(100),
-        titulo_eleitor VARCHAR(100),
+            cor VARCHAR(100),
 
-        zona VARCHAR(50),
-        secao VARCHAR(50),
+            telefone1 VARCHAR(50),
+            telefone2 VARCHAR(50),
 
-        carteira_trabalho VARCHAR(100),
+            cep VARCHAR(20),
+            rua VARCHAR(255),
+            numero VARCHAR(50),
+            complemento VARCHAR(255),
 
-        certidao VARCHAR(100),
+            bairro VARCHAR(255),
+            cidade VARCHAR(255),
+            estado VARCHAR(255),
 
-        programa_federal VARCHAR(255),
-        assistencia VARCHAR(255),
+            referencia TEXT,
+            motivo TEXT,
 
-        situacao_profissional VARCHAR(255),
-        tempo_desempregado VARCHAR(100),
+            rg VARCHAR(100),
+            cpf VARCHAR(100),
+            titulo_eleitor VARCHAR(100),
 
-        composicao_familiar LONGTEXT,
+            zona VARCHAR(50),
+            secao VARCHAR(50),
 
-        renda_familiar VARCHAR(100),
+            carteira_trabalho VARCHAR(100),
 
-        situacao_habitacional VARCHAR(255),
-        tempo_moradia VARCHAR(100),
-        comodos VARCHAR(100),
+            certidao VARCHAR(100),
 
-        tipo_construcao VARCHAR(255),
+            programa_federal VARCHAR(255),
+            assistencia VARCHAR(255),
 
-        abastecimento_agua VARCHAR(255),
+            situacao_profissional VARCHAR(255),
+            tempo_desempregado VARCHAR(100),
 
-        iluminacao VARCHAR(255),
+            composicao_familiar LONGTEXT,
 
-        medicamentos VARCHAR(100),
-        gas VARCHAR(100),
-        alimentacao VARCHAR(100),
-        contas VARCHAR(100),
-        outras_despesas TEXT,
-        total_despesas VARCHAR(100),
+            renda_familiar VARCHAR(100),
 
-        saude_familia LONGTEXT,
+            situacao_habitacional VARCHAR(255),
+            tempo_moradia VARCHAR(100),
+            comodos VARCHAR(100),
 
-        fumante VARCHAR(50),
-        fumante_quem VARCHAR(255),
+            tipo_construcao VARCHAR(255),
 
-        alcoolista VARCHAR(50),
-        alcoolista_quem VARCHAR(255),
+            abastecimento_agua VARCHAR(255),
 
-        drogas VARCHAR(50),
-        drogas_quem VARCHAR(255),
+            iluminacao VARCHAR(255),
 
-        observacoes LONGTEXT,
+            medicamentos VARCHAR(100),
+            gas VARCHAR(100),
+            alimentacao VARCHAR(100),
+            contas VARCHAR(100),
+            outras_despesas TEXT,
+            total_despesas VARCHAR(100),
 
-        data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            saude_familia LONGTEXT,
 
-      )
+            fumante VARCHAR(50),
+            fumante_quem VARCHAR(255),
 
-    `);
+            alcoolista VARCHAR(50),
+            alcoolista_quem VARCHAR(255),
+
+            drogas VARCHAR(50),
+            drogas_quem VARCHAR(255),
+
+            observacoes LONGTEXT,
+
+            data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+          )
+
+        `, (erroCreate) => {
+
+          if(erroCreate){
+
+            console.log(erroCreate);
+
+          } else {
+
+            console.log("Tabela criada!");
+
+          }
+
+        });
+
+      }
+
+    });
 
   }
 
@@ -236,7 +263,7 @@ app.post("/atendidos", (req, res) => {
       ?,?,?,
       ?,
       ?,
-      ?,?,?,?,?,
+      ?,?,?,?,
       ?,
       ?,?,
       ?,?,
@@ -290,7 +317,7 @@ app.post("/atendidos", (req, res) => {
       dados.situacao_profissional,
       dados.tempo_desempregado,
 
-      JSON.stringify(dados.composicao_familiar),
+      JSON.stringify(dados.composicao_familiar || []),
 
       dados.renda_familiar,
 
@@ -311,7 +338,7 @@ app.post("/atendidos", (req, res) => {
       dados.outras_despesas,
       dados.total_despesas,
 
-      JSON.stringify(dados.saude_familia),
+      JSON.stringify(dados.saude_familia || []),
 
       dados.fumante,
       dados.fumante_quem,
