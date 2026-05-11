@@ -7,7 +7,10 @@
 
 <title>Cadastro Social</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet"
+>
 
 <link rel="stylesheet" href="style.css">
 
@@ -31,223 +34,214 @@
 
 <div class="container-box">
 
-<h1>Formulário Social</h1>
-
-<!-- IDENTIFICAÇÃO -->
-
-<h3 class="mt-4">1. Identificação</h3>
+<h1>Cadastro Social</h1>
 
 <div class="row">
 
-<div class="col-md-6">
-<input id="nome" class="form-control mb-3" placeholder="Nome">
+<div class="col-md-6 mt-3">
+<label>Nome</label>
+<input id="nome" class="form-control">
 </div>
 
-<div class="col-md-6">
-<input id="filiacao" class="form-control mb-3" placeholder="Filiação">
+<div class="col-md-6 mt-3">
+<label>Filiação</label>
+<input id="filiacao" class="form-control">
 </div>
 
-<div class="col-md-3">
-<input id="nascimento" type="date" class="form-control mb-3">
+<div class="col-md-4 mt-3">
+<label>Nascimento</label>
+<input id="nascimento" type="date" class="form-control">
 </div>
 
-<div class="col-md-3">
-<select id="sexo" class="form-control mb-3">
-<option>Sexo</option>
-<option>Feminino</option>
+<div class="col-md-4 mt-3">
+<label>Sexo</label>
+<select id="sexo" class="form-control">
+<option></option>
 <option>Masculino</option>
+<option>Feminino</option>
 </select>
 </div>
 
-<div class="col-md-3">
-<input id="estado_civil" class="form-control mb-3" placeholder="Estado Civil">
+<div class="col-md-4 mt-3">
+<label>Estado Civil</label>
+<input id="estado_civil" class="form-control">
 </div>
 
-<div class="col-md-3">
-<input id="naturalidade" class="form-control mb-3" placeholder="Naturalidade">
+<div class="col-md-4 mt-3">
+<label>Naturalidade</label>
+<input id="naturalidade" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="cor" class="form-control mb-3" placeholder="Cor/Raça">
+<div class="col-md-4 mt-3">
+<label>Cor/Raça</label>
+<input id="cor" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="telefone1" class="form-control mb-3" placeholder="Telefone 1">
+<div class="col-md-4 mt-3">
+<label>Telefone 1</label>
+<input id="telefone1" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="telefone2" class="form-control mb-3" placeholder="Telefone 2">
+<div class="col-md-6 mt-3">
+<label>Telefone 2</label>
+<input id="telefone2" class="form-control">
 </div>
 
-<div class="col-md-3">
-<input id="cep" class="form-control mb-3" placeholder="CEP" onblur="buscarCEP()">
+<div class="col-md-3 mt-3">
+<label>CEP</label>
+<input
+id="cep"
+class="form-control"
+onblur="buscarCEP()"
+>
 </div>
 
-<div class="col-md-6">
-<input id="rua" class="form-control mb-3" placeholder="Rua">
+<div class="col-md-6 mt-3">
+<label>Rua</label>
+<input id="rua" class="form-control">
 </div>
 
-<div class="col-md-3">
-<input id="numero" class="form-control mb-3" placeholder="Número">
+<div class="col-md-3 mt-3">
+<label>Número</label>
+<input id="numero" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="bairro" class="form-control mb-3" placeholder="Bairro">
+<div class="col-md-4 mt-3">
+<label>Bairro</label>
+<input id="bairro" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="cidade" class="form-control mb-3" placeholder="Cidade">
+<div class="col-md-4 mt-3">
+<label>Cidade</label>
+<input id="cidade" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="estado" class="form-control mb-3" placeholder="Estado">
+<div class="col-md-4 mt-3">
+<label>Estado</label>
+<input id="estado" class="form-control">
 </div>
 
-<div class="col-md-12">
-<input id="complemento" class="form-control mb-3" placeholder="Complemento">
+<div class="col-md-12 mt-3">
+<label>Complemento</label>
+<input id="complemento" class="form-control">
 </div>
 
-<div class="col-md-12">
-<input id="referencia" class="form-control mb-3" placeholder="Ponto de Referência">
+<div class="col-md-12 mt-3">
+<label>Referência</label>
+<input id="referencia" class="form-control">
 </div>
 
-<div class="col-md-12">
-<textarea id="motivo" class="form-control mb-3" placeholder="Motivo do atendimento"></textarea>
+<div class="col-md-4 mt-3">
+<label>RG</label>
+<input id="rg" class="form-control">
 </div>
 
+<div class="col-md-4 mt-3">
+<label>CPF</label>
+<input id="cpf" class="form-control">
 </div>
 
-<!-- DOCUMENTAÇÃO -->
-
-<h3 class="mt-4">2. Documentação</h3>
-
-<div class="row">
-
-<div class="col-md-4">
-<input id="rg" class="form-control mb-3" placeholder="RG">
+<div class="col-md-4 mt-3">
+<label>Título Eleitor</label>
+<input id="titulo_eleitor" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="cpf" class="form-control mb-3" placeholder="CPF">
+<div class="col-md-3 mt-3">
+<label>Zona</label>
+<input id="zona" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="titulo_eleitor" class="form-control mb-3" placeholder="Título de Eleitor">
+<div class="col-md-3 mt-3">
+<label>Seção</label>
+<input id="secao" class="form-control">
 </div>
 
-<div class="col-md-3">
-<input id="zona" class="form-control mb-3" placeholder="Zona">
+<div class="col-md-6 mt-3">
+<label>Carteira de Trabalho</label>
+<input id="carteira_trabalho" class="form-control">
 </div>
 
-<div class="col-md-3">
-<input id="secao" class="form-control mb-3" placeholder="Seção">
+<div class="col-md-6 mt-3">
+<label>Situação Profissional</label>
+<input id="situacao_profissional" class="form-control">
 </div>
 
-<div class="col-md-6">
-<input id="carteira_trabalho" class="form-control mb-3" placeholder="Carteira de Trabalho">
+<div class="col-md-6 mt-3">
+<label>Tempo Desempregado</label>
+<input id="tempo_desempregado" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="certidao" class="form-control mb-3" placeholder="Certidão">
+<div class="col-md-4 mt-3">
+<label>Renda Familiar</label>
+<input id="renda_familiar" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="programa_federal" class="form-control mb-3" placeholder="Programa Federal">
+<div class="col-md-4 mt-3">
+<label>Situação Habitacional</label>
+<input id="situacao_habitacional" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="assistencia" class="form-control mb-3" placeholder="Assistência recebida">
+<div class="col-md-4 mt-3">
+<label>Tempo Moradia</label>
+<input id="tempo_moradia" class="form-control">
 </div>
 
+<div class="col-md-4 mt-3">
+<label>Cômodos</label>
+<input id="comodos" class="form-control">
 </div>
 
-<!-- PROFISSIONAL -->
-
-<h3 class="mt-4">3. Situação Profissional</h3>
-
-<div class="row">
-
-<div class="col-md-6">
-<input id="situacao_profissional" class="form-control mb-3" placeholder="Situação Profissional">
+<div class="col-md-4 mt-3">
+<label>Tipo Construção</label>
+<input id="tipo_construcao" class="form-control">
 </div>
 
-<div class="col-md-6">
-<input id="tempo_desempregado" class="form-control mb-3" placeholder="Tempo desempregado">
+<div class="col-md-4 mt-3">
+<label>Abastecimento Água</label>
+<input id="abastecimento_agua" class="form-control">
 </div>
 
+<div class="col-md-3 mt-3">
+<label>Medicamentos</label>
+<input id="medicamentos" class="form-control">
 </div>
 
-<!-- HABITAÇÃO -->
-
-<h3 class="mt-4">4. Condições Habitacionais</h3>
-
-<div class="row">
-
-<div class="col-md-4">
-<input id="situacao_habitacional" class="form-control mb-3" placeholder="Situação Habitacional">
+<div class="col-md-3 mt-3">
+<label>Gás</label>
+<input id="gas" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="tempo_moradia" class="form-control mb-3" placeholder="Tempo de Moradia">
+<div class="col-md-3 mt-3">
+<label>Alimentação</label>
+<input id="alimentacao" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="comodos" class="form-control mb-3" placeholder="Quantidade de cômodos">
+<div class="col-md-3 mt-3">
+<label>Contas</label>
+<input id="contas" class="form-control">
 </div>
 
-<div class="col-md-4">
-<input id="tipo_construcao" class="form-control mb-3" placeholder="Tipo de Construção">
+<div class="col-md-12 mt-3">
+<label>Outras Despesas</label>
+<textarea id="outras_despesas" class="form-control"></textarea>
 </div>
 
-<div class="col-md-4">
-<input id="abastecimento_agua" class="form-control mb-3" placeholder="Abastecimento de Água">
+<div class="col-md-12 mt-3">
+<label>Motivo Atendimento</label>
+<textarea id="motivo" class="form-control"></textarea>
 </div>
 
-<div class="col-md-4">
-<input id="iluminacao" class="form-control mb-3" placeholder="Iluminação">
+<div class="col-md-12 mt-3">
+<label>Observações</label>
+<textarea id="observacoes" class="form-control"></textarea>
 </div>
 
-</div>
+<div class="col-md-12 mt-4">
 
-<!-- DESPESAS -->
-
-<h3 class="mt-4">5. Despesas Familiares</h3>
-
-<div class="row">
-
-<div class="col-md-2">
-<input id="medicamentos" class="form-control mb-3" placeholder="Medicamentos">
-</div>
-
-<div class="col-md-2">
-<input id="gas" class="form-control mb-3" placeholder="Gás">
-</div>
-
-<div class="col-md-2">
-<input id="alimentacao" class="form-control mb-3" placeholder="Alimentação">
-</div>
-
-<div class="col-md-2">
-<input id="contas" class="form-control mb-3" placeholder="Contas">
-</div>
-
-<div class="col-md-4">
-<input id="total_despesas" class="form-control mb-3" placeholder="Total despesas">
-</div>
-
-<div class="col-md-12">
-<textarea id="outras_despesas" class="form-control mb-3" placeholder="Outras despesas"></textarea>
-</div>
-
-</div>
-
-<!-- OBSERVAÇÕES -->
-
-<h3 class="mt-4">6. Observações</h3>
-
-<textarea id="observacoes" class="form-control mb-4" rows="6"></textarea>
-
-<button class="btn btn-success w-100" onclick="cadastrar()">
+<button
+class="btn btn-success"
+onclick="salvar()"
+>
 Salvar Cadastro
 </button>
 
@@ -255,122 +249,229 @@ Salvar Cadastro
 
 </div>
 
+</div>
+
+</div>
+
 <script>
 
-async function buscarCEP(){
+const API =
+"https://sistema-ong.onrender.com";
 
-  const cep = document.getElementById("cep").value;
+const params = new URLSearchParams(
+window.location.search
+);
 
-  const resposta = await fetch(
-    `https://viacep.com.br/ws/${cep}/json/`
-  );
+const idEdicao = params.get("id");
 
-  const dados = await resposta.json();
+async function carregarDados(){
 
-  document.getElementById("rua").value = dados.logradouro;
-  document.getElementById("bairro").value = dados.bairro;
-  document.getElementById("cidade").value = dados.localidade;
-  document.getElementById("estado").value = dados.uf;
+if(!idEdicao) return;
+
+const resposta = await fetch(
+
+API + "/atendidos/" + idEdicao
+
+);
+
+const item = await resposta.json();
+
+for(const campo in item){
+
+const elemento =
+document.getElementById(campo);
+
+if(elemento){
+
+elemento.value = item[campo];
 
 }
 
-async function cadastrar(){
+}
 
-  const resposta = await fetch(
-    "https://sistema-ong.onrender.com/atendidos",
-    {
+}
 
-      method: "POST",
+carregarDados();
 
-      headers:{
-        "Content-Type":"application/json"
-      },
+async function buscarCEP(){
 
-      body: JSON.stringify({
+const cep =
+document.getElementById("cep").value;
 
-        nome: document.getElementById("nome").value,
-        filiacao: document.getElementById("filiacao").value,
+if(!cep) return;
 
-        nascimento: document.getElementById("nascimento").value,
-        sexo: document.getElementById("sexo").value,
-        estado_civil: document.getElementById("estado_civil").value,
-        naturalidade: document.getElementById("naturalidade").value,
+const resposta = await fetch(
 
-        cor: document.getElementById("cor").value,
+"https://viacep.com.br/ws/" +
+cep +
+"/json/"
 
-        telefone1: document.getElementById("telefone1").value,
-        telefone2: document.getElementById("telefone2").value,
+);
 
-        cep: document.getElementById("cep").value,
-        rua: document.getElementById("rua").value,
-        numero: document.getElementById("numero").value,
-        complemento: document.getElementById("complemento").value,
+const dados = await resposta.json();
 
-        bairro: document.getElementById("bairro").value,
-        cidade: document.getElementById("cidade").value,
-        estado: document.getElementById("estado").value,
+document.getElementById("rua").value =
+dados.logradouro || "";
 
-        referencia: document.getElementById("referencia").value,
-        motivo: document.getElementById("motivo").value,
+document.getElementById("bairro").value =
+dados.bairro || "";
 
-        rg: document.getElementById("rg").value,
-        cpf: document.getElementById("cpf").value,
-        titulo_eleitor: document.getElementById("titulo_eleitor").value,
+document.getElementById("cidade").value =
+dados.localidade || "";
 
-        zona: document.getElementById("zona").value,
-        secao: document.getElementById("secao").value,
+document.getElementById("estado").value =
+dados.uf || "";
 
-        carteira_trabalho: document.getElementById("carteira_trabalho").value,
+}
 
-        certidao: document.getElementById("certidao").value,
+async function salvar(){
 
-        programa_federal: document.getElementById("programa_federal").value,
-        assistencia: document.getElementById("assistencia").value,
+const dados = {
 
-        situacao_profissional: document.getElementById("situacao_profissional").value,
-        tempo_desempregado: document.getElementById("tempo_desempregado").value,
+nome:
+document.getElementById("nome").value,
 
-        composicao_familiar: [],
-        renda_familiar: "",
+filiacao:
+document.getElementById("filiacao").value,
 
-        situacao_habitacional: document.getElementById("situacao_habitacional").value,
-        tempo_moradia: document.getElementById("tempo_moradia").value,
-        comodos: document.getElementById("comodos").value,
+nascimento:
+document.getElementById("nascimento").value,
 
-        tipo_construcao: document.getElementById("tipo_construcao").value,
+sexo:
+document.getElementById("sexo").value,
 
-        abastecimento_agua: document.getElementById("abastecimento_agua").value,
+estado_civil:
+document.getElementById("estado_civil").value,
 
-        iluminacao: document.getElementById("iluminacao").value,
+naturalidade:
+document.getElementById("naturalidade").value,
 
-        medicamentos: document.getElementById("medicamentos").value,
-        gas: document.getElementById("gas").value,
-        alimentacao: document.getElementById("alimentacao").value,
-        contas: document.getElementById("contas").value,
-        outras_despesas: document.getElementById("outras_despesas").value,
-        total_despesas: document.getElementById("total_despesas").value,
+cor:
+document.getElementById("cor").value,
 
-        saude_familia: [],
+telefone1:
+document.getElementById("telefone1").value,
 
-        fumante: "",
-        fumante_quem: "",
+telefone2:
+document.getElementById("telefone2").value,
 
-        alcoolista: "",
-        alcoolista_quem: "",
+cep:
+document.getElementById("cep").value,
 
-        drogas: "",
-        drogas_quem: "",
+rua:
+document.getElementById("rua").value,
 
-        observacoes: document.getElementById("observacoes").value
+numero:
+document.getElementById("numero").value,
 
-      })
+bairro:
+document.getElementById("bairro").value,
 
-    }
-  );
+cidade:
+document.getElementById("cidade").value,
 
-  const texto = await resposta.text();
+estado:
+document.getElementById("estado").value,
 
-  alert(texto);
+complemento:
+document.getElementById("complemento").value,
+
+referencia:
+document.getElementById("referencia").value,
+
+rg:
+document.getElementById("rg").value,
+
+cpf:
+document.getElementById("cpf").value,
+
+titulo_eleitor:
+document.getElementById("titulo_eleitor").value,
+
+zona:
+document.getElementById("zona").value,
+
+secao:
+document.getElementById("secao").value,
+
+carteira_trabalho:
+document.getElementById("carteira_trabalho").value,
+
+situacao_profissional:
+document.getElementById("situacao_profissional").value,
+
+tempo_desempregado:
+document.getElementById("tempo_desempregado").value,
+
+renda_familiar:
+document.getElementById("renda_familiar").value,
+
+situacao_habitacional:
+document.getElementById("situacao_habitacional").value,
+
+tempo_moradia:
+document.getElementById("tempo_moradia").value,
+
+comodos:
+document.getElementById("comodos").value,
+
+tipo_construcao:
+document.getElementById("tipo_construcao").value,
+
+abastecimento_agua:
+document.getElementById("abastecimento_agua").value,
+
+medicamentos:
+document.getElementById("medicamentos").value,
+
+gas:
+document.getElementById("gas").value,
+
+alimentacao:
+document.getElementById("alimentacao").value,
+
+contas:
+document.getElementById("contas").value,
+
+outras_despesas:
+document.getElementById("outras_despesas").value,
+
+motivo:
+document.getElementById("motivo").value,
+
+observacoes:
+document.getElementById("observacoes").value
+
+};
+
+const resposta = await fetch(
+
+API + "/atendidos" + (idEdicao ? "/" + idEdicao : ""),
+
+{
+
+method:
+idEdicao ? "PUT" : "POST",
+
+headers: {
+
+"Content-Type":
+"application/json"
+
+},
+
+body: JSON.stringify(dados)
+
+}
+
+);
+
+const msg = await resposta.text();
+
+alert(msg);
+
+window.location.href =
+"lista.html";
 
 }
 

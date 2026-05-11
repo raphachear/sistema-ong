@@ -116,19 +116,7 @@ db.connect((err) => {
 
       )
 
-    `, (erroCreate) => {
-
-      if (erroCreate) {
-
-        console.log(erroCreate);
-
-      } else {
-
-        console.log("Tabela pronta!");
-
-      }
-
-    });
+    `);
 
   }
 
@@ -144,97 +132,11 @@ app.get("/teste", (req, res) => {
 // CADASTRAR
 app.post("/atendidos", (req, res) => {
 
-  const dados = req.body;
-
-  const atendido = {
-
-    nome: dados.nome,
-    filiacao: dados.filiacao,
-
-    nascimento: dados.nascimento,
-    sexo: dados.sexo,
-    estado_civil: dados.estado_civil,
-    naturalidade: dados.naturalidade,
-
-    cor: dados.cor,
-
-    telefone1: dados.telefone1,
-    telefone2: dados.telefone2,
-
-    cep: dados.cep,
-    rua: dados.rua,
-    numero: dados.numero,
-    complemento: dados.complemento,
-
-    bairro: dados.bairro,
-    cidade: dados.cidade,
-    estado: dados.estado,
-
-    referencia: dados.referencia,
-    motivo: dados.motivo,
-
-    rg: dados.rg,
-    cpf: dados.cpf,
-    titulo_eleitor: dados.titulo_eleitor,
-
-    zona: dados.zona,
-    secao: dados.secao,
-
-    carteira_trabalho: dados.carteira_trabalho,
-
-    certidao: dados.certidao,
-
-    programa_federal: dados.programa_federal,
-    assistencia: dados.assistencia,
-
-    situacao_profissional: dados.situacao_profissional,
-    tempo_desempregado: dados.tempo_desempregado,
-
-    composicao_familiar: JSON.stringify(
-      dados.composicao_familiar || []
-    ),
-
-    renda_familiar: dados.renda_familiar,
-
-    situacao_habitacional: dados.situacao_habitacional,
-    tempo_moradia: dados.tempo_moradia,
-    comodos: dados.comodos,
-
-    tipo_construcao: dados.tipo_construcao,
-
-    abastecimento_agua: dados.abastecimento_agua,
-
-    iluminacao: dados.iluminacao,
-
-    medicamentos: dados.medicamentos,
-    gas: dados.gas,
-    alimentacao: dados.alimentacao,
-    contas: dados.contas,
-    outras_despesas: dados.outras_despesas,
-    total_despesas: dados.total_despesas,
-
-    saude_familia: JSON.stringify(
-      dados.saude_familia || []
-    ),
-
-    fumante: dados.fumante,
-    fumante_quem: dados.fumante_quem,
-
-    alcoolista: dados.alcoolista,
-    alcoolista_quem: dados.alcoolista_quem,
-
-    drogas: dados.drogas,
-    drogas_quem: dados.drogas_quem,
-
-    observacoes: dados.observacoes
-
-  };
-
   db.query(
 
     "INSERT INTO atendidos SET ?",
 
-    atendido,
+    req.body,
 
     (erro) => {
 
@@ -259,13 +161,11 @@ app.put("/atendidos/:id", (req, res) => {
 
   const id = req.params.id;
 
-  const dados = req.body;
-
   db.query(
 
     "UPDATE atendidos SET ? WHERE id = ?",
 
-    [dados, id],
+    [req.body, id],
 
     (erro) => {
 
@@ -277,7 +177,36 @@ app.put("/atendidos/:id", (req, res) => {
 
       }
 
-      res.send("Atualizado com sucesso");
+      res.send("Atualizado com sucesso!");
+
+    }
+
+  );
+
+});
+
+// BUSCAR POR ID
+app.get("/atendidos/:id", (req, res) => {
+
+  const id = req.params.id;
+
+  db.query(
+
+    "SELECT * FROM atendidos WHERE id = ?",
+
+    [id],
+
+    (erro, resultado) => {
+
+      if (erro) {
+
+        console.log(erro);
+
+        return res.json({});
+
+      }
+
+      res.json(resultado[0] || {});
 
     }
 
@@ -306,7 +235,7 @@ app.delete("/atendidos/:id", (req, res) => {
 
       }
 
-      res.send("Excluído com sucesso");
+      res.send("Excluído com sucesso!");
 
     }
 

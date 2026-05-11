@@ -38,11 +38,11 @@
 <input
 id="busca"
 class="form-control mb-4"
-placeholder="Buscar por nome, CPF ou cidade"
+placeholder="Buscar"
 onkeyup="listar()"
 >
 
-<table class="table table-bordered table-hover">
+<table class="table table-bordered">
 
 <thead class="table-dark">
 
@@ -57,9 +57,7 @@ onkeyup="listar()"
 
 </thead>
 
-<tbody id="tabela">
-
-</tbody>
+<tbody id="tabela"></tbody>
 
 </table>
 
@@ -67,43 +65,10 @@ onkeyup="listar()"
 
 </div>
 
-<!-- MODAL -->
-
-<div class="modal fade" id="modalFicha" tabindex="-1">
-
-<div class="modal-dialog modal-xl">
-
-<div class="modal-content">
-
-<div class="modal-header">
-
-<h5 class="modal-title">
-Ficha Social Completa
-</h5>
-
-<button
-type="button"
-class="btn-close"
-data-bs-dismiss="modal"
-></button>
-
-</div>
-
-<div class="modal-body" id="conteudoFicha">
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
 
-const API = "https://sistema-ong.onrender.com";
+const API =
+"https://sistema-ong.onrender.com";
 
 let atendidos = [];
 
@@ -124,13 +89,13 @@ async function listar(){
 
   atendidos.forEach((item) => {
 
-    const textoBusca = `
+    const texto = `
       ${item.nome}
       ${item.cpf}
       ${item.cidade}
     `.toLowerCase();
 
-    if(textoBusca.includes(busca)){
+    if(texto.includes(busca)){
 
       html += `
 
@@ -141,13 +106,6 @@ async function listar(){
         <td>${item.cidade}</td>
 
         <td>
-
-          <button
-            class="btn btn-info btn-sm"
-            onclick="visualizar(${item.id})"
-          >
-            Visualizar
-          </button>
 
           <button
             class="btn btn-warning btn-sm"
@@ -161,13 +119,6 @@ async function listar(){
             onclick="excluirCadastro(${item.id})"
           >
             Excluir
-          </button>
-
-          <button
-            class="btn btn-primary btn-sm"
-            onclick="gerarPDF(${item.id})"
-          >
-            PDF
           </button>
 
         </td>
@@ -184,283 +135,22 @@ async function listar(){
 
 }
 
-function visualizar(id){
-
-  const item = atendidos.find(a => a.id == id);
-
-  document.getElementById("conteudoFicha").innerHTML = `
-
-    <h2>${item.nome}</h2>
-
-    <hr>
-
-    <h4>Identificação</h4>
-
-    <div class="row">
-
-      <div class="col-md-6 mt-2">
-        <b>Filiação:</b> ${item.filiacao || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Nascimento:</b> ${item.nascimento || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Sexo:</b> ${item.sexo || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Estado Civil:</b> ${item.estado_civil || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Naturalidade:</b> ${item.naturalidade || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Cor/Raça:</b> ${item.cor || ""}
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <b>Telefone 1:</b> ${item.telefone1 || ""}
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <b>Telefone 2:</b> ${item.telefone2 || ""}
-      </div>
-
-    </div>
-
-    <hr>
-
-    <h4>Endereço</h4>
-
-    <div class="row">
-
-      <div class="col-md-6 mt-2">
-        <b>Rua:</b> ${item.rua || ""}
-      </div>
-
-      <div class="col-md-2 mt-2">
-        <b>Número:</b> ${item.numero || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Complemento:</b> ${item.complemento || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Bairro:</b> ${item.bairro || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Cidade:</b> ${item.cidade || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Estado:</b> ${item.estado || ""}
-      </div>
-
-      <div class="col-md-12 mt-2">
-        <b>Referência:</b> ${item.referencia || ""}
-      </div>
-
-    </div>
-
-    <hr>
-
-    <h4>Documentação</h4>
-
-    <div class="row">
-
-      <div class="col-md-4 mt-2">
-        <b>RG:</b> ${item.rg || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>CPF:</b> ${item.cpf || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Título Eleitor:</b> ${item.titulo_eleitor || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Zona:</b> ${item.zona || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Seção:</b> ${item.secao || ""}
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <b>Carteira Trabalho:</b>
-        ${item.carteira_trabalho || ""}
-      </div>
-
-    </div>
-
-    <hr>
-
-    <h4>Situação Profissional</h4>
-
-    <div class="row">
-
-      <div class="col-md-6 mt-2">
-        <b>Situação:</b>
-        ${item.situacao_profissional || ""}
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <b>Tempo Desempregado:</b>
-        ${item.tempo_desempregado || ""}
-      </div>
-
-    </div>
-
-    <hr>
-
-    <h4>Habitação</h4>
-
-    <div class="row">
-
-      <div class="col-md-4 mt-2">
-        <b>Situação Habitacional:</b>
-        ${item.situacao_habitacional || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Tempo Moradia:</b>
-        ${item.tempo_moradia || ""}
-      </div>
-
-      <div class="col-md-4 mt-2">
-        <b>Cômodos:</b>
-        ${item.comodos || ""}
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <b>Tipo Construção:</b>
-        ${item.tipo_construcao || ""}
-      </div>
-
-      <div class="col-md-6 mt-2">
-        <b>Água:</b>
-        ${item.abastecimento_agua || ""}
-      </div>
-
-    </div>
-
-    <hr>
-
-    <h4>Despesas</h4>
-
-    <div class="row">
-
-      <div class="col-md-3 mt-2">
-        <b>Medicamentos:</b>
-        ${item.medicamentos || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Gás:</b>
-        ${item.gas || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Alimentação:</b>
-        ${item.alimentacao || ""}
-      </div>
-
-      <div class="col-md-3 mt-2">
-        <b>Contas:</b>
-        ${item.contas || ""}
-      </div>
-
-      <div class="col-md-12 mt-2">
-        <b>Outras despesas:</b>
-        ${item.outras_despesas || ""}
-      </div>
-
-    </div>
-
-    <hr>
-
-    <h4>Motivo Atendimento</h4>
-
-    <p>${item.motivo || ""}</p>
-
-    <hr>
-
-    <h4>Observações</h4>
-
-    <p>${item.observacoes || ""}</p>
-
-  `;
-
-  const modal = new bootstrap.Modal(
-    document.getElementById("modalFicha")
-  );
-
-  modal.show();
-
-}
-
 function editar(id){
 
-  const item = atendidos.find(a => a.id == id);
-
-  const novoTelefone = prompt(
-    "Novo telefone:",
-    item.telefone1
-  );
-
-  if(novoTelefone == null) return;
-
-  fetch(
-
-    API + "/atendidos/" + id,
-
-    {
-
-      method: "PUT",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-
-        telefone1: novoTelefone
-
-      })
-
-    }
-
-  )
-
-  .then(res => res.text())
-
-  .then(msg => {
-
-    alert(msg);
-
-    listar();
-
-  });
+  window.location.href =
+    "cadastro.html?id=" + id;
 
 }
 
-function excluirCadastro(id){
+async function excluirCadastro(id){
 
   const confirmar = confirm(
-    "Deseja realmente excluir este cadastro?"
+    "Deseja excluir?"
   );
 
   if(!confirmar) return;
 
-  fetch(
+  await fetch(
 
     API + "/atendidos/" + id,
 
@@ -470,84 +160,9 @@ function excluirCadastro(id){
 
     }
 
-  )
+  );
 
-  .then(res => res.text())
-
-  .then(msg => {
-
-    alert(msg);
-
-    listar();
-
-  });
-
-}
-
-async function gerarPDF(id){
-
-  const item = atendidos.find(a => a.id == id);
-
-  const { jsPDF } = window.jspdf;
-
-  const doc = new jsPDF();
-
-  let y = 20;
-
-  doc.setFontSize(18);
-
-  doc.text("FICHA SOCIAL - ONG", 60, y);
-
-  y += 20;
-
-  doc.setFontSize(12);
-
-  function linha(texto){
-
-    doc.text(texto, 20, y);
-
-    y += 8;
-
-  }
-
-  linha("Nome: " + (item.nome || ""));
-  linha("Filiação: " + (item.filiacao || ""));
-  linha("Nascimento: " + (item.nascimento || ""));
-  linha("Sexo: " + (item.sexo || ""));
-  linha("Estado Civil: " + (item.estado_civil || ""));
-  linha("Naturalidade: " + (item.naturalidade || ""));
-  linha("Cor/Raça: " + (item.cor || ""));
-  linha("CPF: " + (item.cpf || ""));
-  linha("RG: " + (item.rg || ""));
-  linha("Telefone: " + (item.telefone1 || ""));
-  linha("Rua: " + (item.rua || ""));
-  linha("Número: " + (item.numero || ""));
-  linha("Bairro: " + (item.bairro || ""));
-  linha("Cidade: " + (item.cidade || ""));
-  linha("Estado: " + (item.estado || ""));
-  linha("Referência: " + (item.referencia || ""));
-
-  y += 10;
-
-  linha("Motivo Atendimento:");
-  linha(item.motivo || "");
-
-  y += 10;
-
-  linha("Observações:");
-  linha(item.observacoes || "");
-
-  y += 30;
-
-  doc.line(20, y, 80, y);
-  doc.line(120, y, 180, y);
-
-  y += 5;
-
-  doc.text("Responsável ONG", 25, y);
-  doc.text("Atendido", 140, y);
-
-  doc.save("ficha-social.pdf");
+  listar();
 
 }
 
