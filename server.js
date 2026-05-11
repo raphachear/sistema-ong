@@ -30,117 +30,101 @@ db.connect((err) => {
 
     console.log("MySQL conectado!");
 
-    // APAGAR TABELA ANTIGA
-    db.query("DROP TABLE IF EXISTS atendidos", (erroDrop) => {
+    db.query(`
 
-      if (erroDrop) {
+      CREATE TABLE IF NOT EXISTS atendidos (
 
-        console.log(erroDrop);
+        id INT AUTO_INCREMENT PRIMARY KEY,
+
+        nome VARCHAR(255),
+        filiacao VARCHAR(255),
+
+        nascimento VARCHAR(100),
+        sexo VARCHAR(20),
+        estado_civil VARCHAR(100),
+        naturalidade VARCHAR(100),
+
+        cor VARCHAR(100),
+
+        telefone1 VARCHAR(50),
+        telefone2 VARCHAR(50),
+
+        cep VARCHAR(20),
+        rua VARCHAR(255),
+        numero VARCHAR(50),
+        complemento VARCHAR(255),
+
+        bairro VARCHAR(255),
+        cidade VARCHAR(255),
+        estado VARCHAR(255),
+
+        referencia TEXT,
+        motivo TEXT,
+
+        rg VARCHAR(100),
+        cpf VARCHAR(100),
+        titulo_eleitor VARCHAR(100),
+
+        zona VARCHAR(50),
+        secao VARCHAR(50),
+
+        carteira_trabalho VARCHAR(100),
+
+        certidao VARCHAR(100),
+
+        programa_federal VARCHAR(255),
+        assistencia VARCHAR(255),
+
+        situacao_profissional VARCHAR(255),
+        tempo_desempregado VARCHAR(100),
+
+        composicao_familiar LONGTEXT,
+
+        renda_familiar VARCHAR(100),
+
+        situacao_habitacional VARCHAR(255),
+        tempo_moradia VARCHAR(100),
+        comodos VARCHAR(100),
+
+        tipo_construcao VARCHAR(255),
+
+        abastecimento_agua VARCHAR(255),
+
+        iluminacao VARCHAR(255),
+
+        medicamentos VARCHAR(100),
+        gas VARCHAR(100),
+        alimentacao VARCHAR(100),
+        contas VARCHAR(100),
+        outras_despesas TEXT,
+        total_despesas VARCHAR(100),
+
+        saude_familia LONGTEXT,
+
+        fumante VARCHAR(50),
+        fumante_quem VARCHAR(255),
+
+        alcoolista VARCHAR(50),
+        alcoolista_quem VARCHAR(255),
+
+        drogas VARCHAR(50),
+        drogas_quem VARCHAR(255),
+
+        observacoes LONGTEXT,
+
+        data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+      )
+
+    `, (erroCreate) => {
+
+      if (erroCreate) {
+
+        console.log(erroCreate);
 
       } else {
 
-        console.log("Tabela antiga removida");
-
-        // CRIAR NOVA TABELA
-        db.query(`
-
-          CREATE TABLE atendidos (
-
-            id INT AUTO_INCREMENT PRIMARY KEY,
-
-            nome VARCHAR(255),
-            filiacao VARCHAR(255),
-
-            nascimento VARCHAR(100),
-            sexo VARCHAR(20),
-            estado_civil VARCHAR(100),
-            naturalidade VARCHAR(100),
-
-            cor VARCHAR(100),
-
-            telefone1 VARCHAR(50),
-            telefone2 VARCHAR(50),
-
-            cep VARCHAR(20),
-            rua VARCHAR(255),
-            numero VARCHAR(50),
-            complemento VARCHAR(255),
-
-            bairro VARCHAR(255),
-            cidade VARCHAR(255),
-            estado VARCHAR(255),
-
-            referencia TEXT,
-            motivo TEXT,
-
-            rg VARCHAR(100),
-            cpf VARCHAR(100),
-            titulo_eleitor VARCHAR(100),
-
-            zona VARCHAR(50),
-            secao VARCHAR(50),
-
-            carteira_trabalho VARCHAR(100),
-
-            certidao VARCHAR(100),
-
-            programa_federal VARCHAR(255),
-            assistencia VARCHAR(255),
-
-            situacao_profissional VARCHAR(255),
-            tempo_desempregado VARCHAR(100),
-
-            composicao_familiar LONGTEXT,
-
-            renda_familiar VARCHAR(100),
-
-            situacao_habitacional VARCHAR(255),
-            tempo_moradia VARCHAR(100),
-            comodos VARCHAR(100),
-
-            tipo_construcao VARCHAR(255),
-
-            abastecimento_agua VARCHAR(255),
-
-            iluminacao VARCHAR(255),
-
-            medicamentos VARCHAR(100),
-            gas VARCHAR(100),
-            alimentacao VARCHAR(100),
-            contas VARCHAR(100),
-            outras_despesas TEXT,
-            total_despesas VARCHAR(100),
-
-            saude_familia LONGTEXT,
-
-            fumante VARCHAR(50),
-            fumante_quem VARCHAR(255),
-
-            alcoolista VARCHAR(50),
-            alcoolista_quem VARCHAR(255),
-
-            drogas VARCHAR(50),
-            drogas_quem VARCHAR(255),
-
-            observacoes LONGTEXT,
-
-            data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
-          )
-
-        `, (erroCreate) => {
-
-          if (erroCreate) {
-
-            console.log(erroCreate);
-
-          } else {
-
-            console.log("Tabela criada!");
-
-          }
-
-        });
+        console.log("Tabela pronta!");
 
       }
 
@@ -263,6 +247,66 @@ app.post("/atendidos", (req, res) => {
       }
 
       res.send("Cadastro realizado com sucesso!");
+
+    }
+
+  );
+
+});
+
+// EDITAR
+app.put("/atendidos/:id", (req, res) => {
+
+  const id = req.params.id;
+
+  const dados = req.body;
+
+  db.query(
+
+    "UPDATE atendidos SET ? WHERE id = ?",
+
+    [dados, id],
+
+    (erro) => {
+
+      if (erro) {
+
+        console.log(erro);
+
+        return res.send("Erro ao atualizar");
+
+      }
+
+      res.send("Atualizado com sucesso");
+
+    }
+
+  );
+
+});
+
+// EXCLUIR
+app.delete("/atendidos/:id", (req, res) => {
+
+  const id = req.params.id;
+
+  db.query(
+
+    "DELETE FROM atendidos WHERE id = ?",
+
+    [id],
+
+    (erro) => {
+
+      if (erro) {
+
+        console.log(erro);
+
+        return res.send("Erro ao excluir");
+
+      }
+
+      res.send("Excluído com sucesso");
 
     }
 

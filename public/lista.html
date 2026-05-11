@@ -103,12 +103,14 @@ data-bs-dismiss="modal"
 
 <script>
 
+const API = "https://sistema-ong.onrender.com";
+
 let atendidos = [];
 
 async function listar(){
 
   const resposta = await fetch(
-    "https://sistema-ong.onrender.com/atendidos"
+    API + "/atendidos"
   );
 
   atendidos = await resposta.json();
@@ -145,6 +147,20 @@ async function listar(){
             onclick="visualizar(${item.id})"
           >
             Visualizar
+          </button>
+
+          <button
+            class="btn btn-warning btn-sm"
+            onclick="editar(${item.id})"
+          >
+            Editar
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            onclick="excluirCadastro(${item.id})"
+          >
+            Excluir
           </button>
 
           <button
@@ -388,6 +404,83 @@ function visualizar(id){
   );
 
   modal.show();
+
+}
+
+function editar(id){
+
+  const item = atendidos.find(a => a.id == id);
+
+  const novoTelefone = prompt(
+    "Novo telefone:",
+    item.telefone1
+  );
+
+  if(novoTelefone == null) return;
+
+  fetch(
+
+    API + "/atendidos/" + id,
+
+    {
+
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        telefone1: novoTelefone
+
+      })
+
+    }
+
+  )
+
+  .then(res => res.text())
+
+  .then(msg => {
+
+    alert(msg);
+
+    listar();
+
+  });
+
+}
+
+function excluirCadastro(id){
+
+  const confirmar = confirm(
+    "Deseja realmente excluir este cadastro?"
+  );
+
+  if(!confirmar) return;
+
+  fetch(
+
+    API + "/atendidos/" + id,
+
+    {
+
+      method: "DELETE"
+
+    }
+
+  )
+
+  .then(res => res.text())
+
+  .then(msg => {
+
+    alert(msg);
+
+    listar();
+
+  });
 
 }
 
