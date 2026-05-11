@@ -15,7 +15,25 @@
 
 <body>
 
-<div class="container mt-5">
+<div class="sidebar">
+
+<div class="logo">
+
+<img src="images/logo.png">
+
+</div>
+
+<a href="dashboard.html">Dashboard</a>
+
+<a href="cadastro.html">Cadastrar Atendido</a>
+
+<a href="lista.html">Lista de Atendidos</a>
+
+<a href="index.html">Sair</a>
+
+</div>
+
+<div class="content">
 
 <div class="container-box">
 
@@ -23,14 +41,14 @@
 
 <input
 id="busca"
-class="form-control mb-3"
+class="form-control mb-4"
 placeholder="Buscar por nome"
 onkeyup="listar()"
 >
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 
-<thead>
+<thead class="table-dark">
 
 <tr>
 
@@ -72,20 +90,18 @@ async function listar(){
 
   dados.forEach((item) => {
 
-    if(
-      item.nome.toLowerCase().includes(busca)
-    ){
+    if(item.nome.toLowerCase().includes(busca)){
 
       html += `
 
-        <tr>
+      <tr>
 
-          <td>${item.nome}</td>
-          <td>${item.cpf}</td>
-          <td>${item.telefone}</td>
-          <td>${item.cidade}</td>
+        <td>${item.nome}</td>
+        <td>${item.cpf}</td>
+        <td>${item.telefone}</td>
+        <td>${item.cidade}</td>
 
-        </tr>
+      </tr>
 
       `;
 
