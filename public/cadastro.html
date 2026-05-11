@@ -34,217 +34,405 @@ rel="stylesheet"
 
 <div class="container-box">
 
-<h1>Cadastro Social</h1>
+<h1 class="mb-4">
+Cadastro Social
+</h1>
 
 <div class="row">
 
-<div class="col-md-6 mt-3">
+<!-- DADOS PESSOAIS -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-dark text-white">
+<h4>Dados Pessoais</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
 <label>Nome</label>
 <input id="nome" class="form-control">
 </div>
 
-<div class="col-md-6 mt-3">
+<div class="col-md-6 mb-3">
 <label>Filiação</label>
 <input id="filiacao" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Nascimento</label>
 <input id="nascimento" type="date" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
+
 <label>Sexo</label>
+
 <select id="sexo" class="form-control">
+
 <option></option>
 <option>Masculino</option>
 <option>Feminino</option>
+
 </select>
+
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Estado Civil</label>
 <input id="estado_civil" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Naturalidade</label>
 <input id="naturalidade" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Cor/Raça</label>
 <input id="cor" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- CONTATO -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-primary text-white">
+<h4>Contato</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
 <label>Telefone 1</label>
 <input id="telefone1" class="form-control">
 </div>
 
-<div class="col-md-6 mt-3">
+<div class="col-md-6 mb-3">
 <label>Telefone 2</label>
 <input id="telefone2" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ENDEREÇO -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-success text-white">
+<h4>Endereço</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-3 mb-3">
+
 <label>CEP</label>
+
 <input
 id="cep"
 class="form-control"
 onblur="buscarCEP()"
 >
+
 </div>
 
-<div class="col-md-6 mt-3">
+<div class="col-md-6 mb-3">
 <label>Rua</label>
 <input id="rua" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+<div class="col-md-3 mb-3">
 <label>Número</label>
 <input id="numero" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Bairro</label>
 <input id="bairro" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Cidade</label>
 <input id="cidade" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Estado</label>
 <input id="estado" class="form-control">
 </div>
 
-<div class="col-md-12 mt-3">
+<div class="col-md-12 mb-3">
 <label>Complemento</label>
 <input id="complemento" class="form-control">
 </div>
 
-<div class="col-md-12 mt-3">
+<div class="col-md-12 mb-3">
 <label>Referência</label>
 <input id="referencia" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- DOCUMENTAÇÃO -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-danger text-white">
+<h4>Documentação</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
 <label>RG</label>
 <input id="rg" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>CPF</label>
 <input id="cpf" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Título Eleitor</label>
 <input id="titulo_eleitor" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+<div class="col-md-3 mb-3">
 <label>Zona</label>
 <input id="zona" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+<div class="col-md-3 mb-3">
 <label>Seção</label>
 <input id="secao" class="form-control">
 </div>
 
-<div class="col-md-6 mt-3">
-<label>Carteira de Trabalho</label>
+<div class="col-md-6 mb-3">
+<label>Carteira Trabalho</label>
 <input id="carteira_trabalho" class="form-control">
 </div>
 
-<div class="col-md-6 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- SITUAÇÃO SOCIAL -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-secondary text-white">
+<h4>Situação Social</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
 <label>Situação Profissional</label>
 <input id="situacao_profissional" class="form-control">
 </div>
 
-<div class="col-md-6 mt-3">
+<div class="col-md-6 mb-3">
 <label>Tempo Desempregado</label>
 <input id="tempo_desempregado" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Renda Familiar</label>
 <input id="renda_familiar" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- HABITAÇÃO -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-warning">
+<h4>Habitação</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
 <label>Situação Habitacional</label>
 <input id="situacao_habitacional" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Tempo Moradia</label>
 <input id="tempo_moradia" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mb-3">
 <label>Cômodos</label>
 <input id="comodos" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-6 mb-3">
 <label>Tipo Construção</label>
 <input id="tipo_construcao" class="form-control">
 </div>
 
-<div class="col-md-4 mt-3">
+<div class="col-md-6 mb-3">
 <label>Abastecimento Água</label>
 <input id="abastecimento_agua" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- DESPESAS -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-info text-white">
+<h4>Despesas</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-3 mb-3">
 <label>Medicamentos</label>
 <input id="medicamentos" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+<div class="col-md-3 mb-3">
 <label>Gás</label>
 <input id="gas" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+<div class="col-md-3 mb-3">
 <label>Alimentação</label>
 <input id="alimentacao" class="form-control">
 </div>
 
-<div class="col-md-3 mt-3">
+<div class="col-md-3 mb-3">
 <label>Contas</label>
 <input id="contas" class="form-control">
 </div>
 
-<div class="col-md-12 mt-3">
+<div class="col-md-12 mb-3">
+
 <label>Outras Despesas</label>
-<textarea id="outras_despesas" class="form-control"></textarea>
+
+<textarea
+id="outras_despesas"
+class="form-control"
+></textarea>
+
 </div>
 
-<div class="col-md-12 mt-3">
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ATENDIMENTO -->
+
+<div class="col-12">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-dark text-white">
+<h4>Atendimento Social</h4>
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-12 mb-3">
+
 <label>Motivo Atendimento</label>
-<textarea id="motivo" class="form-control"></textarea>
+
+<textarea
+id="motivo"
+class="form-control"
+></textarea>
+
 </div>
 
-<div class="col-md-12 mt-3">
+<div class="col-md-12 mb-3">
+
 <label>Observações</label>
-<textarea id="observacoes" class="form-control"></textarea>
+
+<textarea
+id="observacoes"
+class="form-control"
+></textarea>
+
 </div>
 
 <div class="col-md-12 mt-4">
 
 <button
-class="btn btn-success"
+class="btn btn-success btn-lg"
 onclick="salvar()"
 >
 Salvar Cadastro
 </button>
 
+</div>
+
+</div>
+
+</div>
+</div>
 </div>
 
 </div>
@@ -258,11 +446,13 @@ Salvar Cadastro
 const API =
 "https://sistema-ong.onrender.com";
 
-const params = new URLSearchParams(
+const params =
+new URLSearchParams(
 window.location.search
 );
 
-const idEdicao = params.get("id");
+const idEdicao =
+params.get("id");
 
 async function carregarDados(){
 
@@ -308,7 +498,8 @@ cep +
 
 );
 
-const dados = await resposta.json();
+const dados =
+await resposta.json();
 
 document.getElementById("rua").value =
 dados.logradouro || "";
@@ -460,13 +651,15 @@ headers: {
 
 },
 
-body: JSON.stringify(dados)
+body:
+JSON.stringify(dados)
 
 }
 
 );
 
-const msg = await resposta.text();
+const msg =
+await resposta.text();
 
 alert(msg);
 
