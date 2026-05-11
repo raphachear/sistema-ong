@@ -78,7 +78,7 @@ onkeyup="listar()"
 <div class="modal-header">
 
 <h5 class="modal-title">
-Ficha Social
+Ficha Social Completa
 </h5>
 
 <button
@@ -174,56 +174,212 @@ function visualizar(id){
 
   document.getElementById("conteudoFicha").innerHTML = `
 
-    <h3>${item.nome}</h3>
+    <h2>${item.nome}</h2>
 
     <hr>
 
+    <h4>Identificação</h4>
+
     <div class="row">
 
-      <div class="col-md-6">
-        <b>CPF:</b> ${item.cpf}
+      <div class="col-md-6 mt-2">
+        <b>Filiação:</b> ${item.filiacao || ""}
       </div>
 
-      <div class="col-md-6">
-        <b>RG:</b> ${item.rg}
+      <div class="col-md-3 mt-2">
+        <b>Nascimento:</b> ${item.nascimento || ""}
       </div>
 
-      <div class="col-md-6 mt-3">
-        <b>Telefone:</b> ${item.telefone1}
+      <div class="col-md-3 mt-2">
+        <b>Sexo:</b> ${item.sexo || ""}
       </div>
 
-      <div class="col-md-6 mt-3">
-        <b>Estado Civil:</b> ${item.estado_civil}
+      <div class="col-md-4 mt-2">
+        <b>Estado Civil:</b> ${item.estado_civil || ""}
       </div>
 
-      <div class="col-md-12 mt-3">
-        <b>Endereço:</b>
-        ${item.rua}, ${item.numero}
+      <div class="col-md-4 mt-2">
+        <b>Naturalidade:</b> ${item.naturalidade || ""}
       </div>
 
-      <div class="col-md-4 mt-3">
-        <b>Bairro:</b> ${item.bairro}
+      <div class="col-md-4 mt-2">
+        <b>Cor/Raça:</b> ${item.cor || ""}
       </div>
 
-      <div class="col-md-4 mt-3">
-        <b>Cidade:</b> ${item.cidade}
+      <div class="col-md-6 mt-2">
+        <b>Telefone 1:</b> ${item.telefone1 || ""}
       </div>
 
-      <div class="col-md-4 mt-3">
-        <b>Estado:</b> ${item.estado}
-      </div>
-
-      <div class="col-md-12 mt-4">
-        <b>Motivo do atendimento:</b>
-        <p>${item.motivo || ""}</p>
-      </div>
-
-      <div class="col-md-12 mt-4">
-        <b>Observações:</b>
-        <p>${item.observacoes || ""}</p>
+      <div class="col-md-6 mt-2">
+        <b>Telefone 2:</b> ${item.telefone2 || ""}
       </div>
 
     </div>
+
+    <hr>
+
+    <h4>Endereço</h4>
+
+    <div class="row">
+
+      <div class="col-md-6 mt-2">
+        <b>Rua:</b> ${item.rua || ""}
+      </div>
+
+      <div class="col-md-2 mt-2">
+        <b>Número:</b> ${item.numero || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Complemento:</b> ${item.complemento || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Bairro:</b> ${item.bairro || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Cidade:</b> ${item.cidade || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Estado:</b> ${item.estado || ""}
+      </div>
+
+      <div class="col-md-12 mt-2">
+        <b>Referência:</b> ${item.referencia || ""}
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h4>Documentação</h4>
+
+    <div class="row">
+
+      <div class="col-md-4 mt-2">
+        <b>RG:</b> ${item.rg || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>CPF:</b> ${item.cpf || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Título Eleitor:</b> ${item.titulo_eleitor || ""}
+      </div>
+
+      <div class="col-md-3 mt-2">
+        <b>Zona:</b> ${item.zona || ""}
+      </div>
+
+      <div class="col-md-3 mt-2">
+        <b>Seção:</b> ${item.secao || ""}
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <b>Carteira Trabalho:</b>
+        ${item.carteira_trabalho || ""}
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h4>Situação Profissional</h4>
+
+    <div class="row">
+
+      <div class="col-md-6 mt-2">
+        <b>Situação:</b>
+        ${item.situacao_profissional || ""}
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <b>Tempo Desempregado:</b>
+        ${item.tempo_desempregado || ""}
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h4>Habitação</h4>
+
+    <div class="row">
+
+      <div class="col-md-4 mt-2">
+        <b>Situação Habitacional:</b>
+        ${item.situacao_habitacional || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Tempo Moradia:</b>
+        ${item.tempo_moradia || ""}
+      </div>
+
+      <div class="col-md-4 mt-2">
+        <b>Cômodos:</b>
+        ${item.comodos || ""}
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <b>Tipo Construção:</b>
+        ${item.tipo_construcao || ""}
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <b>Água:</b>
+        ${item.abastecimento_agua || ""}
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h4>Despesas</h4>
+
+    <div class="row">
+
+      <div class="col-md-3 mt-2">
+        <b>Medicamentos:</b>
+        ${item.medicamentos || ""}
+      </div>
+
+      <div class="col-md-3 mt-2">
+        <b>Gás:</b>
+        ${item.gas || ""}
+      </div>
+
+      <div class="col-md-3 mt-2">
+        <b>Alimentação:</b>
+        ${item.alimentacao || ""}
+      </div>
+
+      <div class="col-md-3 mt-2">
+        <b>Contas:</b>
+        ${item.contas || ""}
+      </div>
+
+      <div class="col-md-12 mt-2">
+        <b>Outras despesas:</b>
+        ${item.outras_despesas || ""}
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h4>Motivo Atendimento</h4>
+
+    <p>${item.motivo || ""}</p>
+
+    <hr>
+
+    <h4>Observações</h4>
+
+    <p>${item.observacoes || ""}</p>
 
   `;
 
@@ -247,38 +403,48 @@ async function gerarPDF(id){
 
   doc.setFontSize(18);
 
-  doc.text("FICHA SOCIAL - ONG", 65, y);
+  doc.text("FICHA SOCIAL - ONG", 60, y);
 
   y += 20;
 
   doc.setFontSize(12);
 
-  doc.text("Nome: " + item.nome, 20, y);
+  function linha(texto){
+
+    doc.text(texto, 20, y);
+
+    y += 8;
+
+  }
+
+  linha("Nome: " + (item.nome || ""));
+  linha("Filiação: " + (item.filiacao || ""));
+  linha("Nascimento: " + (item.nascimento || ""));
+  linha("Sexo: " + (item.sexo || ""));
+  linha("Estado Civil: " + (item.estado_civil || ""));
+  linha("Naturalidade: " + (item.naturalidade || ""));
+  linha("Cor/Raça: " + (item.cor || ""));
+  linha("CPF: " + (item.cpf || ""));
+  linha("RG: " + (item.rg || ""));
+  linha("Telefone: " + (item.telefone1 || ""));
+  linha("Rua: " + (item.rua || ""));
+  linha("Número: " + (item.numero || ""));
+  linha("Bairro: " + (item.bairro || ""));
+  linha("Cidade: " + (item.cidade || ""));
+  linha("Estado: " + (item.estado || ""));
+  linha("Referência: " + (item.referencia || ""));
+
   y += 10;
 
-  doc.text("CPF: " + item.cpf, 20, y);
-  y += 10;
-
-  doc.text("RG: " + item.rg, 20, y);
-  y += 10;
-
-  doc.text("Telefone: " + item.telefone1, 20, y);
-  y += 10;
-
-  doc.text("Cidade: " + item.cidade, 20, y);
-  y += 10;
-
-  doc.text("Estado: " + item.estado, 20, y);
-
-  y += 20;
-
-  doc.text("Motivo:", 20, y);
+  linha("Motivo Atendimento:");
+  linha(item.motivo || "");
 
   y += 10;
 
-  doc.text(item.motivo || "", 20, y);
+  linha("Observações:");
+  linha(item.observacoes || "");
 
-  y += 40;
+  y += 30;
 
   doc.line(20, y, 80, y);
   doc.line(120, y, 180, y);
